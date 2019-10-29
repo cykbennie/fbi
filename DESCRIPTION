@@ -1,0 +1,23 @@
+Package: fbi
+Type: Package
+Title: Factor-Based Imputation and FRED-MD Data Set
+Version: 0.1.0
+Date: 2019-10-11
+Authors@R: c(person("Yankang (Bennie)", "Chen", email = "yankang.chen@columbia.edu", role = c("aut", "cre")),
+    person("Serena", "Ng", email = "serena.ng@columbia.edu", role = "aut"),
+    person("Jushan", "Bai", email = "jushan.bai@columbia.edu", role = "aut"))
+Author: Yankang (Bennie) Chen [aut, cre]
+    Serena Ng [aut],
+    Jushan Bai [aut]
+Maintainer: Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Description: The fbi package contains functions to estimate factor models and
+    impute missing data based on factor models. It also includes functions to
+    load and prepare the FRED-MD data set.
+Depends: R (>= 3.5.0)
+Imports: readr, pracma
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
