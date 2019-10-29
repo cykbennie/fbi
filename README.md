@@ -1,4 +1,5 @@
 # fbi: Factor-Based Imputation for Missing Data
+[![Build Status](https://travis-ci.com/cykbennie/fbi.svg?token=dA5SZDGLsSvqz1kkp4Se&branch=master)](https://travis-ci.com/cykbennie/fbi)
 
 The codes in the `fbi` package are developed based on the following papers:
 
