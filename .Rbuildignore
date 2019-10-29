@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
+^README\.md$
+^LICENSE\.md$
+^fbi.pdf$
