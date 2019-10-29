@@ -40,11 +40,6 @@ a list of elements:
 \description{
 \code{rpca} estimates the approximate factor models of the given matrix.
 }
-\examples{
-results <- rpca(X, kmax, standardize = FALSE, tau = None)
-summary(results)
-results$d
-}
 \references{
 Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.
 \url{https://onlinelibrary.wiley.com/doi/pdf/10.1111/1468-0262.00273}

@@ -22,10 +22,7 @@
 #'
 #' Jushan Bai and Serena Ng (2017), \emph{Rank regularized estimation of approximate factor models}.
 #' \url{https://www.sciencedirect.com/science/article/pii/S0304407619300764}
-#'
-#' @examples
-#' results <- rpca(X, kmax, standardize = FALSE, rank_reg = FALSE, tau = 0)
-#' coef(results)
+
 
 
 se.rpca <- function(object, xpoints, qq){

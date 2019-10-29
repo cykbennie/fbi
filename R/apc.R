@@ -22,9 +22,6 @@
 #' @references
 #' Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
 #' \url{https://arxiv.org/abs/1910.06677}
-#'
-#' @examples
-#' results <- apc(X, r)
 
 
 

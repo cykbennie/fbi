@@ -20,10 +20,6 @@ standard error of C^hat
 \code{se.rpca} produces the estimated standard error of C^hat
 produced by the \code{\link{rpca}} function.
 }
-\examples{
-results <- rpca(X, kmax, standardize = FALSE, rank_reg = FALSE, tau = 0)
-coef(results)
-}
 \references{
 Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.
 \url{https://onlinelibrary.wiley.com/doi/pdf/10.1111/1468-0262.00273}

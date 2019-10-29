@@ -25,10 +25,6 @@ a list of elements:
 \description{
 \code{tw_apc} imputates the missing values in a given panel data.
 }
-\examples{
-results <- tw_apc(X1, r1, center = FALSE, standardize = FALSE)
-data_imputed <- results$data
-}
 \references{
 Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
 \url{https://arxiv.org/abs/1910.06677}
