@@ -15,23 +15,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-
-
 # Import data
 
 ```{r}
 library(fbi)
-library(DT)
 
 data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE)
 N <- ncol(data)
 
 # View the head lines of data
-DT::datatable(data, options = list(scrollX = TRUE, pageLength = 5))
+head(data)
 ```
 
 
@@ -52,10 +45,9 @@ X_bal <- data_bal[,2:ncol(data_bal)]
 rownames(X_bal) <- data_bal[,1]
 
 # View balanced data
-datatable(X_bal, options = list(scrollX = TRUE, pageLength = 3))
+head(X_bal)
 
 # Run rpca
-library(fbi)
 out <- rpca(X_bal, kmax = 8, standardize = FALSE, tau = 0)
 ```
 
@@ -63,9 +55,9 @@ out <- rpca(X_bal, kmax = 8, standardize = FALSE, tau = 0)
 ## Estimates for F, Lambda, C
 
 ```{r}
-datatable(out$Fhat, options = list(scrollY = TRUE, pageLength = 5))
-datatable(out$Lamhat, options = list(scrollY = TRUE, pageLength = 5))
-datatable(out$Chat, options = list(scrollY = TRUE, pageLength = 5))
+head(out$Fhat)
+head(out$Lamhat)
+head(out$Chat)
 ```
 
 ## Standard Error of C^hat
