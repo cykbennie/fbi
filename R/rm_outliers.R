@@ -19,7 +19,7 @@
 #' @examples
 #' library(fbi)
 #' data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE)
-#' newdata <- rm_outlier.fredmd(data)
+#' newdata <- rm_outliers.fredmd(data)
 
 
 

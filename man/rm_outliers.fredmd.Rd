@@ -19,7 +19,7 @@ the \code{\link{fredmd}} function.
 \examples{
 library(fbi)
 data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE)
-newdata <- rm_outlier.fredmd(data)
+newdata <- rm_outliers.fredmd(data)
 }
 \references{
 Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly and Quarterly Databases for Macroeconomic Research}.

@@ -15,7 +15,7 @@ Description: The fbi package contains functions to estimate factor models and
     load and prepare the FRED-MD data set.
 Depends: R (>= 3.5.0)
 Imports: readr, pracma
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
