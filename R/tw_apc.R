@@ -3,6 +3,7 @@
 #' @description
 #' \code{tw_apc} imputates the missing values in a given panel data.
 #'
+#' @import stats
 #' @import pracma
 #' @export
 #'
@@ -44,6 +45,7 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
 
   # Clear memory and create output object
   gc()
+  library(stats)
   out <- list()
 
   T <- nrow(X1)

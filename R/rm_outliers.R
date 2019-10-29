@@ -4,6 +4,7 @@
 #' \code{rm_outliers.fredmd} removes outliers of the FRED-MD data set produced by
 #' the \code{\link{fredmd}} function.
 #'
+#' @import stats
 #' @export
 #'
 #' @param object an object of class \code{\link{fredmd}}.
@@ -26,6 +27,8 @@
 rm_outliers.fredmd <- function(object) {
   if (!inherits(object, "fredmd"))
     stop("Object must be of class 'fredmd'")
+
+  library(stats)
 
   data <- object
   N <- ncol(data)
