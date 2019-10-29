@@ -17,6 +17,7 @@ FRED-MD data of class \code{fredmd} with outliers removed.
 the \code{\link{fredmd}} function.
 }
 \examples{
+library(fbi)
 data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE)
 newdata <- rm_outlier.fredmd(data)
 }

@@ -17,6 +17,7 @@
 #' \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}
 #'
 #' @examples
+#' library(fbi)
 #' data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE)
 #' newdata <- rm_outlier.fredmd(data)
 

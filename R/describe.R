@@ -22,6 +22,7 @@
 #' \url{https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/Appendix_Tables_Update.pdf}
 #'
 #' @examples
+#' library(fbi)
 #' varnames <- describe(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
 
 

@@ -28,6 +28,7 @@ a subset of the (transformed) FRED-MD data of class \code{fredmd}.
 a few tools to manipulate the data set.
 }
 \examples{
+library(fbi)
 data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
 }
 \references{

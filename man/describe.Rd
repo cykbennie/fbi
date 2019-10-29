@@ -24,6 +24,7 @@ a vector of variable names, or a data frame with detailed descriptions.
 in the FRED-MD data set.
 }
 \examples{
+library(fbi)
 varnames <- describe(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
 }
 \references{

@@ -20,7 +20,7 @@ If \code{tau = 0}, then rank regularization is not used.}
 a list of elements:
 \item{X}{}
 \item{kmax}{}
-\item{standardize}
+\item{standardize}{}
 \item{tau}{}
 \item{ic2}{}
 \item{pc2k}{}
