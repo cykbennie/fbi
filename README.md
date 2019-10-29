@@ -13,14 +13,16 @@ The codes in the `fbi` package are developed based on the following papers:
 
 ## Requirements
 
-The `fbi` package requires the following two R packages:
+The `fbi` package requires the following three R packages:
 
+* `stats`
 * `readr`
 * `pracma`
 
 They should be installed prior to the installation of the `fbi` package:
 
 ``` r
+install.packages("stats")
 install.packages("readr")
 install.packages("pracma")
 ```
