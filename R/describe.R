@@ -40,7 +40,7 @@ describe <- function(varname, name.only = TRUE, verbose = FALSE) {
            of the format 'X1' to 'X135'")
   }
 
-  data(fredmd_description)
+  fredmd_description <- fredmd_description
 
   index <- c()
   for (name in varname) {

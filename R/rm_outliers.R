@@ -25,24 +25,24 @@
 
 
 rm_outliers.fredmd <- function(object) {
+  # Error checking
   if (!inherits(object, "fredmd"))
     stop("Object must be of class 'fredmd'")
 
-  library(stats)
 
   data <- object
   N <- ncol(data)
   X <- data[, 2:N]
 
   # Calcualte median of each series
-  median_X <- apply(X, 2, median, na.rm = TRUE)
+  median_X <- apply(X, 2, stats::median, na.rm = TRUE)
 
   # Repeat median of each series over all data points in the series
   median_X_mat <- matrix(rep(median_X, nrow(X)), nrow = nrow(X),
                          ncol = ncol(X), byrow = TRUE)
 
   # Calculate quartiles
-  Q <- apply(X, 2, quantile, probs = c(0.25, 0.75), na.rm = TRUE)
+  Q <- apply(X, 2, stats::quantile, probs = c(0.25, 0.75), na.rm = TRUE)
 
   # Calculate interquartile range (IQR) of each series
   IQR <- Q[2, ] - Q[1, ]

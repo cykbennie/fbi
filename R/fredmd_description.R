@@ -9,7 +9,8 @@
 #' @format A data frame with 135 rows and 9 variables. The variables are as follows:
 #' \describe{
 #'   \item{id}{series ID number}
-#'   \item{tcode}{type of transformation}
+#'   \item{tcode}{code of transformation}
+#'   \item{ttype}{type of transformation}
 #'   \item{fred}{variable name used in the FRED-MD data set}
 #'   \item{description}{description of the series}
 #'   \item{gsi}{variable name used in the Global Insights Basic Economics Database (GSI)}

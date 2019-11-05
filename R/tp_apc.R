@@ -45,7 +45,6 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
 
   # Clear memory and create output object
   gc()
-  library(stats)
   out <- list()
 
 
@@ -60,7 +59,7 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
   T1 <- sum(goodT)
   N1 <- sum(goodN)
   mu1 <- matrix(rep(colMeans(X1, na.rm = TRUE), T), nrow = T, ncol = N, byrow = TRUE)
-  sd1 <- matrix(rep(apply(X1, 2, sd, na.rm = TRUE), T), nrow = T, ncol = N, byrow = TRUE)
+  sd1 <- matrix(rep(apply(X1, 2, stats::sd, na.rm = TRUE), T), nrow = T, ncol = N, byrow = TRUE)
 
 
   if (center & standardize){
