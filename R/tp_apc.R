@@ -1,11 +1,10 @@
-#' @title Tall-Wide Imputation of Missing Value in Panel Data
+#' @title Tall-Project Imputation of Missing Value in Panel Data
 #'
 #' @description
-#' \code{tw_apc} imputates the missing values in a given panel data using the
-#' method of "Tall-Wide".
+#' \code{tp_apc} imputates the missing values in a given panel data using the
+#' method of "Tall-Project".
 #'
 #' @import stats
-#' @import pracma
 #' @export
 #'
 #' @param X1 a matrix of size T by N.
@@ -24,12 +23,12 @@
 #' @author Jushan Bai <jushan.bai@@columbia.edu>
 #'
 #' @references
-#' Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
-#' \url{https://arxiv.org/abs/1910.06677}
+#' Cahan, E., Bai, J. and Ng, S. 2019, Factor Based Imputation of Missing Data
+#' and Covariance Matrix Estimation. unpublished manucript, Columbia University
 
 
 
-tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
+tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
   # Error checking
   if (! is.logical(center))
     stop("'center' must be logical.")
@@ -68,58 +67,82 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     # demean and standardize
 
     XT <- (X1[,goodN] - mu1[,goodN]) / sd1[,goodN]
-    XN <- (X1[goodT,] - mu1[goodT,]) / sd1[goodT,]
+    XN <- (X1 - mu1) / sd1
 
     bnXT <- fbi::apc(XT, r1)
-    bnXN <- fbi::apc(XN, r1)
-
-    HH <- pracma::mldivide(bnXN$Lamhat[1:N1, 1:r1], bnXT$Lamhat[1:N1, 1:r1])
-    Lamhat <- bnXN$Lamhat %*% HH
     Fhat <- bnXT$Fhat
-    Chat <- bnXT$Fhat %*% t(Lamhat)
+    Lamhat <- matrix(rep(0, N*(r1+1)), nrow = N, ncol = r1+1)
+
+    for (i in 1:N) {
+      goodTi <- missing[, i] == FALSE
+      Fn1 <- Fhat[goodTi, ]
+      lenTi <- sum(goodTi, na.rm = TRUE)
+      Reg <- cbind(matrix(rep(1, lenTi), nrow = lenTi, ncol = 1), Fn1)
+      P <- solve(t(Reg) %*% Reg) %*% t(Reg)
+      Lamhat[i, ] <- P %*% XN[goodTi, i]
+    }
+
+    Chat <- cbind(matrix(rep(1, T), nrow = T, ncol = 1), Fhat) %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] * sd1[missing] + mu1[missing]
-    out$Fhat <- bnXT$Fhat
+
+    out$Fhat <- Fhat
     out$Lamhat <- Lamhat
-    out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+    out$Chat <- Chat * sd1 + mu1
     out$data <- Xhat
 
   } else if (center & (!standardize)){
     # only demean, do not standardize
 
     XT <- X1[,goodN] - mu1[,goodN]
-    XN <- X1[goodT,] - mu1[goodT,]
+    XN <- X1 - mu1
 
     bnXT <- fbi::apc(XT, r1)
-    bnXN <- fbi::apc(XN, r1)
-
-    HH <- pracma::mldivide(bnXN$Lamhat[1:N1, 1:r1], bnXT$Lamhat[1:N1, 1:r1])
-    Lamhat <- bnXN$Lamhat %*% HH
     Fhat <- bnXT$Fhat
-    Chat <- bnXT$Fhat %*% t(Lamhat)
+    Lamhat <- matrix(rep(0, N*(r1+1)), nrow = N, ncol = r1+1)
+
+    for (i in 1:N) {
+      goodTi <- missing[, i] == FALSE
+      Fn1 <- Fhat[goodTi, ]
+      lenTi <- sum(goodTi, na.rm = TRUE)
+      Reg <- cbind(matrix(rep(1, lenTi), nrow = lenTi, ncol = 1), Fn1)
+      P <- solve(t(Reg) %*% Reg) %*% t(Reg)
+      Lamhat[i, ] <- P %*% XN[goodTi, i]
+    }
+
+    Chat <- cbind(matrix(rep(1, T), nrow = T, ncol = 1), Fhat) %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] + mu1[missing]
-    out$Fhat <- bnXT$Fhat
+
+    out$Fhat <- Fhat
     out$Lamhat <- Lamhat
-    out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+    out$Chat <- Chat + mu1
     out$data <- Xhat
 
   } else {
     # no demeaning or standardizing
 
     XT <- X1[,goodN]
-    XN <- X1[goodT,]
+    XN <- X1
 
     bnXT <- fbi::apc(XT, r1)
-    bnXN <- fbi::apc(XN, r1)
-
-    HH <- pracma::mldivide(bnXN$Lamhat[1:N1, 1:r1], bnXT$Lamhat[1:N1, 1:r1])
-    Lamhat <- bnXN$Lamhat %*% HH
     Fhat <- bnXT$Fhat
-    Chat <- bnXT$Fhat %*% t(Lamhat)
+    Lamhat <- matrix(rep(0, N*(r1+1)), nrow = N, ncol = r1+1)
+
+    for (i in 1:N) {
+      goodTi <- missing[, i] == FALSE
+      Fn1 <- Fhat[goodTi, ]
+      lenTi <- sum(goodTi, na.rm = TRUE)
+      Reg <- cbind(matrix(rep(1, lenTi), nrow = lenTi, ncol = 1), Fn1)
+      P <- solve(t(Reg) %*% Reg) %*% t(Reg)
+      Lamhat[i, ] <- P %*% XN[goodTi, i]
+    }
+
+    Chat <- cbind(matrix(rep(1, T), nrow = T, ncol = 1), Fhat) %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing]
-    out$Fhat <- bnXT$Fhat
+
+    out$Fhat <- Fhat
     out$Lamhat <- Lamhat
     out$Chat <- Chat
     out$data <- Xhat
