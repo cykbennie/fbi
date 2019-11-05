@@ -6,7 +6,7 @@ Date: 2019-10-11
 Authors@R: c(person("Yankang (Bennie)", "Chen", email = "yankang.chen@columbia.edu", role = c("aut", "cre")),
     person("Serena", "Ng", email = "serena.ng@columbia.edu", role = "aut"),
     person("Jushan", "Bai", email = "jushan.bai@columbia.edu", role = "aut"))
-Author: Yankang (Bennie) Chen [aut, cre]
+Author: Yankang (Bennie) Chen [aut, cre],
     Serena Ng [aut],
     Jushan Bai [aut]
 Maintainer: Yankang (Bennie) Chen <yankang.chen@columbia.edu>
