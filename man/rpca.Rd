@@ -42,10 +42,10 @@ a list of elements:
 }
 \references{
 Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.
-\url{https://onlinelibrary.wiley.com/doi/pdf/10.1111/1468-0262.00273}
+\url{https://doi.org/10.1111/1468-0262.00273}
 
 Jushan Bai and Serena Ng (2017), \emph{Rank regularized estimation of approximate factor models}.
-\url{https://www.sciencedirect.com/science/article/pii/S0304407619300764}
+\url{https://doi.org/10.1016/j.jeconom.2019.04.021}
 }
 \author{
 Yankang (Bennie) Chen <yankang.chen@columbia.edu>

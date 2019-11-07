@@ -23,8 +23,8 @@ a list of elements:
 \code{apc} estiamtes the factor model of a given balanced panel data.
 }
 \references{
-Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
-\url{https://arxiv.org/abs/1910.06677}
+Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.
+\url{https://doi.org/10.1111/1468-0262.00273}
 }
 \author{
 Yankang (Bennie) Chen <yankang.chen@columbia.edu>

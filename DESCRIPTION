@@ -10,17 +10,18 @@ Author: Yankang (Bennie) Chen [aut, cre],
     Serena Ng [aut],
     Jushan Bai [aut]
 Maintainer: Yankang (Bennie) Chen <yankang.chen@columbia.edu>
-Description: Factor-Based imputation of missing values in panel data and and 
-    manipulation of the FRED-MD Data Set. It estimates the factor model in the panel 
-    data based on the methods in Bai and Ng (2002) <https://onlinelibrary.wiley.com/doi/pdf/10.1111/1468-0262.00273> 
-    and Bai and Ng (2017) <https://www.sciencedirect.com/science/article/pii/S0304407619300764>. 
-    It then computes the missing values using the Tall-Wide method (Bai and Ng 
-    (2019) <https://arxiv.org/abs/1910.06677>) or the Tall-Project method (Cahan 
-    et al. (2019), unpublished manucript). It also facilitates loading, preparing, 
-    and interpreting the FRED-MD data set <https://research.stlouisfed.org/econ/mccracken/fred-databases>.
+Description: Factor-Based imputation of missing values in panel data and and
+    manipulation of the FRED-MD Data Set. It estimates the factor model in the
+    panel data based on the methods in Bai and Ng (2002)
+    <https://doi.org/10.1111/1468-0262.00273> and Bai and Ng (2017)
+    <https://doi.org/10.1016/j.jeconom.2019.04.021>. It then computes the missing
+    values using the Tall-Wide method (Bai and Ng (2019)
+    <https://arxiv.org/abs/1910.06677>) or the Tall-Project method (Cahan et al.
+    (2019), unpublished manucript). It also facilitates loading, preparing, and
+    interpreting the FRED-MD data set <https://research.stlouisfed.org/econ/mccracken/fred-databases>.
 Depends: R (>= 3.5.0)
 Imports: stats, readr, pracma
-License: GPL-3 + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
