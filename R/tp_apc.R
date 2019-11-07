@@ -70,25 +70,26 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
 
     bnXT <- fbi::apc(XT, r1)
     Fhat <- bnXT$Fhat
-    Lamhat <- matrix(rep(0, N*(r1+1)), nrow = N, ncol = r1+1)
+    Lamhat <- matrix(rep(0, N*r1), nrow = N, ncol = r1)
 
     for (i in 1:N) {
       goodTi <- missing[, i] == FALSE
       Fn1 <- Fhat[goodTi, ]
-      lenTi <- sum(goodTi, na.rm = TRUE)
-      Reg <- cbind(matrix(rep(1, lenTi), nrow = lenTi, ncol = 1), Fn1)
+      Reg <- Fn1
       P <- solve(t(Reg) %*% Reg) %*% t(Reg)
       Lamhat[i, ] <- P %*% XN[goodTi, i]
     }
 
-    Chat <- cbind(matrix(rep(1, T), nrow = T, ncol = 1), Fhat) %*% t(Lamhat)
+    Chat <- Fhat %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] * sd1[missing] + mu1[missing]
 
-    out$Fhat <- Fhat
-    out$Lamhat <- Lamhat
-    out$Chat <- Chat * sd1 + mu1
+    reest <- fbi::apc(Xhat, r1)
     out$data <- Xhat
+    out$Fhat <- reest$Fhat
+    out$Lamhat <- reest$Lamhat
+    out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+
 
   } else if (center & (!standardize)){
     # only demean, do not standardize
@@ -98,25 +99,25 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
 
     bnXT <- fbi::apc(XT, r1)
     Fhat <- bnXT$Fhat
-    Lamhat <- matrix(rep(0, N*(r1+1)), nrow = N, ncol = r1+1)
+    Lamhat <- matrix(rep(0, N*r1), nrow = N, ncol = r1)
 
     for (i in 1:N) {
       goodTi <- missing[, i] == FALSE
       Fn1 <- Fhat[goodTi, ]
-      lenTi <- sum(goodTi, na.rm = TRUE)
-      Reg <- cbind(matrix(rep(1, lenTi), nrow = lenTi, ncol = 1), Fn1)
+      Reg <- Fn1
       P <- solve(t(Reg) %*% Reg) %*% t(Reg)
       Lamhat[i, ] <- P %*% XN[goodTi, i]
     }
 
-    Chat <- cbind(matrix(rep(1, T), nrow = T, ncol = 1), Fhat) %*% t(Lamhat)
+    Chat <- Fhat %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] + mu1[missing]
 
-    out$Fhat <- Fhat
-    out$Lamhat <- Lamhat
-    out$Chat <- Chat + mu1
+    reest <- fbi::apc(Xhat, r1)
     out$data <- Xhat
+    out$Fhat <- reest$Fhat
+    out$Lamhat <- reest$Lamhat
+    out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
 
   } else {
     # no demeaning or standardizing
@@ -141,10 +142,11 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing]
 
-    out$Fhat <- Fhat
-    out$Lamhat <- Lamhat
-    out$Chat <- Chat
+    reest <- fbi::apc(Xhat, r1)
     out$data <- Xhat
+    out$Fhat <- reest$Fhat
+    out$Lamhat <- reest$Lamhat
+    out$Chat <- out$Fhat %*% t(out$Lamhat)
 
   }
 

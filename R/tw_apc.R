@@ -78,10 +78,13 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Chat <- bnXT$Fhat %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] * sd1[missing] + mu1[missing]
-    out$Fhat <- bnXT$Fhat
-    out$Lamhat <- Lamhat
-    out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+
+    reest <- fbi::apc(Xhat, r1)
     out$data <- Xhat
+    out$Fhat <- reest$Fhat
+    out$Lamhat <- reest$Lamhat
+    out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+
 
   } else if (center & (!standardize)){
     # only demean, do not standardize
@@ -98,10 +101,13 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Chat <- bnXT$Fhat %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] + mu1[missing]
-    out$Fhat <- bnXT$Fhat
-    out$Lamhat <- Lamhat
-    out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+
+    reest <- fbi::apc(Xhat, r1)
     out$data <- Xhat
+    out$Fhat <- reest$Fhat
+    out$Lamhat <- reest$Lamhat
+    out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+
 
   } else {
     # no demeaning or standardizing
@@ -118,10 +124,12 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Chat <- bnXT$Fhat %*% t(Lamhat)
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing]
-    out$Fhat <- bnXT$Fhat
-    out$Lamhat <- Lamhat
-    out$Chat <- Chat
+
+    reest <- fbi::apc(Xhat, r1)
     out$data <- Xhat
+    out$Fhat <- reest$Fhat
+    out$Lamhat <- reest$Lamhat
+    out$Chat <- out$Fhat %*% t(out$Lamhat)
 
   }
 
