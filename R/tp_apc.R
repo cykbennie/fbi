@@ -24,7 +24,7 @@
 #'
 #' @references
 #' Cahan, E., Bai, J. and Ng, S. 2019, Factor Based Imputation of Missing Data
-#' and Covariance Matrix Estimation. unpublished manucript, Columbia University
+#' and Covariance Matrix Estimation. unpublished manuscript, Columbia University
 
 
 
