@@ -78,10 +78,17 @@ tnt <- function(data, param){
 
 
   X1vecN0 <- X1[, 1:N0]
+  X1vecN0 <- matrix(as.vector(X1vecN0), ncol = 1)
+
   X2vecN0 <- X2[, 1:N0]
+  X2vecN0 <- matrix(as.vector(X2vecN0), ncol = 1)
+
   Y0vecN0 <- Y0[, 1:N0]
-  X1vecN <- X1
-  X2vecN <- X2
+  Y0vecN0 <- matrix(as.vector(Y0vecN0), ncol = 1)
+
+  X1vecN <- matrix(as.vector(X1), ncol = 1)
+  X2vecN <- matrix(as.vector(X2), ncol = 1)
+
   oneN0 <- pracma::ones(nrow(X1vecN0), 1)
   reg0 <- cbind(X1vecN0, X2vecN0, oneN0)
 
@@ -98,7 +105,7 @@ tnt <- function(data, param){
     	Zhat <- Y0[,1:N0] - out1$beta[1] * X1[,1:N0] - out1$beta[2] * X2[,1:N0] - out1$beta[3]
       itFE <- fbi::apc(Zhat, r)
       Y00 <- Y0[,1:N0] - itFE$Fhat %*% t(itFE$Lamhat)
-      Y00vec <- Y00
+      Y00vec <- matrix(as.vector(Y00), ncol = 1)
       out2$beta <- solve(t(reg0) %*% reg0) %*% t(reg0) %*% Y00vec
       gap <- out1$beta - out2$beta
 
