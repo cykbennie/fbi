@@ -34,8 +34,7 @@ apc <- function(X, r){
   if (r > min(nrow(X), ncol(X)))
     stop("'r' must be smaller than the size of X.")
 
-  # Clear memory and create output object
-  gc()
+  # Create output object
   out <- list()
 
   T <- nrow(X)

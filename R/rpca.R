@@ -55,8 +55,9 @@ rpca <- function(X, kmax, standardize = FALSE, tau = 0) {
   if (kmax > min(nrow(X), ncol(X)))
     stop("'kmax' must be smaller than the size of X.")
 
-  # Clear memory and create output object
-  gc()
+
+
+  # Create output object
   out <- list()
   out$X <- X
   out$kmax <- kmax

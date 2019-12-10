@@ -44,8 +44,7 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
   if (r1 > min(nrow(X1), ncol(X1)))
     stop("'r1' must be smaller than the size of X1.")
 
-  # Clear memory and create output object
-  gc()
+  # Create output object
   out <- list()
 
 

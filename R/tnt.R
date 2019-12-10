@@ -34,8 +34,7 @@ tnt <- function(data, param){
 
 
 
-  # Clear memory and create output object
-  gc()
+  # Create output object
   output <- list()
 
   x1 <- data$x1

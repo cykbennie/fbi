@@ -51,10 +51,6 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
   }
 
 
-  # Clear memory
-  gc()
-
-
 
   # Prepare raw data
   if (local) {
