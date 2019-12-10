@@ -4,8 +4,7 @@
 \alias{fredmd}
 \title{Loading FRED-MD Data Set}
 \usage{
-fredmd(date_start = NULL, date_end = NULL, transform = TRUE,
-  local = FALSE)
+fredmd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
 }
 \arguments{
 \item{date_start}{Date or \code{NULL}, the start date (included) of the data selection.
