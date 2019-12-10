@@ -27,9 +27,9 @@
 
 tnt <- function(data, param){
   # Error checking
-    if (! isTRUE(c("x1", "x2", "y0", "y1", "N0", "N1", "T0", "T1") %in% names(data)))
+    if (! all(c("x1", "x2", "y0", "y1", "N0", "N1", "T0", "T1") %in% names(data)))
       stop("'data' must be a list containing x1, x2, y0, y1, N0, N1, T0, and T1.")
-    if (! isTRUE(c("K", "r", "do_FE", "do_IFE", "maxit1") %in% names(param)))
+    if (! all(c("K", "r", "do_FE", "do_IFE", "maxit1") %in% names(param)))
       stop("'param' must be a list containing K, r, do_FE, do_IFE, and maxit1.")
 
 
