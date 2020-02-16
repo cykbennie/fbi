@@ -11,6 +11,8 @@
 #' @param r1 integer, indicating the maximum number of factors.
 #' @param center logical, indicating Whether or not X1 should be demeaned
 #' @param standardize logical, indicating Whether or not X1 should be scaled.
+#' @param re_estimate logical, indicating Whether or not output factors,
+#' `Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.
 #'
 #' @return a list of elements:
 #' \item{Fhat}{}
@@ -28,12 +30,15 @@
 
 
 
-tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
+tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE,
+                   re_estimate = TRUE) {
   # Error checking
   if (! is.logical(center))
     stop("'center' must be logical.")
   if (! is.logical(standardize))
     stop("'standardize' must be logical.")
+  if (! is.logical(re_estimate))
+    stop("'re_estimate' must be logical.")
   if ((! center) & (standardize))
     stop("The option 'center = FALSE, standardize = TRUE' is not available.")
   if (! is.matrix(X1))
@@ -43,7 +48,8 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
   if (r1 > min(nrow(X1), ncol(X1)))
     stop("'r1' must be smaller than the size of X1.")
 
-  # Create output object
+  # Clear memory and create output object
+  gc()
   out <- list()
 
 
@@ -83,11 +89,18 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] * sd1[missing] + mu1[missing]
 
-    reest <- fbi::apc(Xhat, r1)
-    out$data <- Xhat
-    out$Fhat <- reest$Fhat
-    out$Lamhat <- reest$Lamhat
-    out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+    if (re_estimate){
+      reest <- fbi::apc(Xhat, r1)
+      out$data <- Xhat
+      out$Fhat <- reest$Fhat
+      out$Lamhat <- reest$Lamhat
+      out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+    } else {
+      out$data <- Xhat
+      out$Fhat <- Fhat
+      out$Lamhat <- Lamhat
+      out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+    }
 
 
   } else if (center & (!standardize)){
@@ -112,15 +125,22 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing] + mu1[missing]
 
-    reest <- fbi::apc(Xhat, r1)
-    out$data <- Xhat
-    out$Fhat <- reest$Fhat
-    out$Lamhat <- reest$Lamhat
-    out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+    if (re_estimate){
+      reest <- fbi::apc(Xhat, r1)
+      out$data <- Xhat
+      out$Fhat <- reest$Fhat
+      out$Lamhat <- reest$Lamhat
+      out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+    } else {
+      out$data <- Xhat
+      out$Fhat <- Fhat
+      out$Lamhat <- Lamhat
+      out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+    }
+
 
   } else {
     # no demeaning or standardizing
-
     XT <- X1[,goodN]
     XN <- X1
 
@@ -141,11 +161,18 @@ tp_apc <- function(X1, r1, center = FALSE, standardize = FALSE) {
     Xhat <- X1   # estimated data
     Xhat[missing] <- Chat[missing]
 
-    reest <- fbi::apc(Xhat, r1)
-    out$data <- Xhat
-    out$Fhat <- reest$Fhat
-    out$Lamhat <- reest$Lamhat
-    out$Chat <- out$Fhat %*% t(out$Lamhat)
+    if (re_estimate){
+      reest <- fbi::apc(Xhat, r1)
+      out$data <- Xhat
+      out$Fhat <- reest$Fhat
+      out$Lamhat <- reest$Lamhat
+      out$Chat <- out$Fhat %*% t(out$Lamhat)
+    } else {
+      out$data <- Xhat
+      out$Fhat <- Fhat
+      out$Lamhat <- Lamhat
+      out$Chat <- out$Fhat %*% t(out$Lamhat)
+    }
 
   }
 

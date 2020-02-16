@@ -4,7 +4,7 @@
 \alias{tw_apc}
 \title{Tall-Wide Imputation of Missing Value in Panel Data}
 \usage{
-tw_apc(X1, r1, center = FALSE, standardize = FALSE)
+tw_apc(X1, r1, center = FALSE, standardize = FALSE, re_estimate = TRUE)
 }
 \arguments{
 \item{X1}{a matrix of size T by N.}
@@ -14,6 +14,9 @@ tw_apc(X1, r1, center = FALSE, standardize = FALSE)
 \item{center}{logical, indicating Whether or not X1 should be demeaned}
 
 \item{standardize}{logical, indicating Whether or not X1 should be scaled.}
+
+\item{re_estimate}{logical, indicating Whether or not output factors,
+`Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.}
 }
 \value{
 a list of elements:

@@ -4,7 +4,7 @@
 \alias{tp_apc}
 \title{Tall-Project Imputation of Missing Value in Panel Data}
 \usage{
-tp_apc(X1, r1, center = FALSE, standardize = FALSE)
+tp_apc(X1, r1, center = FALSE, standardize = FALSE, re_estimate = TRUE)
 }
 \arguments{
 \item{X1}{a matrix of size T by N.}
@@ -14,6 +14,9 @@ tp_apc(X1, r1, center = FALSE, standardize = FALSE)
 \item{center}{logical, indicating Whether or not X1 should be demeaned}
 
 \item{standardize}{logical, indicating Whether or not X1 should be scaled.}
+
+\item{re_estimate}{logical, indicating Whether or not output factors,
+`Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.}
 }
 \value{
 a list of elements:
