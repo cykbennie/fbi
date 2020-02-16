@@ -94,7 +94,7 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE,
       out$data <- Xhat
       out$Fhat <- Fhat
       out$Lamhat <- Lamhat
-      out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
+      out$Chat <- Chat*sd1 + mu1
     }
 
 
@@ -124,7 +124,7 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE,
       out$data <- Xhat
       out$Fhat <- Fhat
       out$Lamhat <- Lamhat
-      out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
+      out$Chat <- Chat + mu1
     }
 
 
@@ -154,7 +154,7 @@ tw_apc <- function(X1, r1, center = FALSE, standardize = FALSE,
       out$data <- Xhat
       out$Fhat <- Fhat
       out$Lamhat <- Lamhat
-      out$Chat <- out$Fhat %*% t(out$Lamhat)
+      out$Chat <- Chat
     }
 
   }
