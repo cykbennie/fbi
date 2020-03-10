@@ -9,9 +9,9 @@
 #'
 #' @param X1 a matrix of size T by N.
 #' @param r1 integer, indicating the maximum number of factors.
-#' @param center logical, indicating Whether or not X1 should be demeaned
-#' @param standardize logical, indicating Whether or not X1 should be scaled.
-#' @param re_estimate logical, indicating Whether or not output factors,
+#' @param center logical, indicating whether or not X1 should be demeaned
+#' @param standardize logical, indicating whether or not X1 should be scaled.
+#' @param re_estimate logical, indicating whether or not output factors,
 #' `Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.
 #'
 #' @return a list of elements:

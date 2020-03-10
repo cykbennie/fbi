@@ -11,11 +11,11 @@ tw_apc(X1, r1, center = FALSE, standardize = FALSE, re_estimate = TRUE)
 
 \item{r1}{integer, indicating the maximum number of factors.}
 
-\item{center}{logical, indicating Whether or not X1 should be demeaned}
+\item{center}{logical, indicating whether or not X1 should be demeaned}
 
-\item{standardize}{logical, indicating Whether or not X1 should be scaled.}
+\item{standardize}{logical, indicating whether or not X1 should be scaled.}
 
-\item{re_estimate}{logical, indicating Whether or not output factors,
+\item{re_estimate}{logical, indicating whether or not output factors,
 `Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.}
 }
 \value{

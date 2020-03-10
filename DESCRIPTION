@@ -2,7 +2,7 @@ Package: fbi
 Type: Package
 Title: Factor-Based Imputation and FRED-MD Data Set
 Version: 0.1.0
-Date: 2019-12-10
+Date: 2020-03-10
 Authors@R: c(person("Yankang (Bennie)", "Chen", email = "yankang.chen@columbia.edu", role = c("aut", "cre")),
     person("Serena", "Ng", email = "serena.ng@columbia.edu", role = "aut"),
     person("Jushan", "Bai", email = "jushan.bai@columbia.edu", role = "aut"))
@@ -19,6 +19,7 @@ Description: Factor-Based imputation of missing values in panel data and and
     <arXiv:1910.06677>) or the Tall-Project method (Bai, Cahan, and Ng
     (2019), unpublished manuscript). It also facilitates loading, preparing, and
     interpreting the FRED-MD data set <https://research.stlouisfed.org/econ/mccracken/fred-databases>.
+URL: https://github.com/cykbennie/fbi
 Depends: R (>= 3.5.0)
 Imports: stats, readr, pracma
 License: GPL-3 + LICENSE
