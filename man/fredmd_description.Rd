@@ -4,7 +4,8 @@
 \name{fredmd_description}
 \alias{fredmd_description}
 \title{FRED-MD Data Set Description}
-\format{A data frame with 135 rows and 9 variables. The variables are as follows:
+\format{
+A data frame with 135 rows and 9 variables. The variables are as follows:
 \describe{
   \item{id}{series ID number}
   \item{tcode}{code of transformation}
@@ -16,7 +17,8 @@
   \item{group}{group of the series}
   \item{edited}{logical, indicating if the data has been editted}
   \item{varname}{"X" + id}
-}}
+}
+}
 \source{
 The \code{fredmd_description} data were obtained from
 Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD Updated Appendix}.

@@ -1,8 +1,8 @@
-#' @title Describe selected variables in the FRED-MD Data Set
+#' @title Describe selected variables in the FRED-QD Data Set
 #'
 #' @description
-#' \code{describe} provides a description of the selected variables
-#' in the FRED-MD data set.
+#' \code{describe_qd} provides a description of the selected variables
+#' in the FRED-QD data set.
 #'
 #' @export
 #'
@@ -18,37 +18,37 @@
 #' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
 #'
 #' @references
-#' Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD Updated Appendix}.
-#' \url{https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/Appendix_Tables_Update.pdf}
+#' Michael W. McCracken and Serena Ng (2020), \emph{FRED-QD Updated Appendix}.
+#' \url{https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/FRED-QD_appendix.pdf}
 #'
 #' @examples
 #' library(fbi)
-#' varnames <- describe(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
+#' varnames <- describe_qd(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
 
 
 
-describe <- function(varname, name.only = TRUE, verbose = FALSE) {
+describe_qd <- function(varname, name.only = TRUE, verbose = FALSE) {
   # Error checking
   for (name in varname) {
     if (substr(name, 1, 1) != "X")
       stop("varname must be a string or a vector strings
-           of the format 'X1' to 'X135'")
+           of the format 'X1' to 'X248'")
 
     tempnum <- as.integer(substr(name, 2, 4))
-    if ((tempnum < 1) | (tempnum > 135))
+    if ((tempnum < 1) | (tempnum > 248))
       stop("varname must be a string or a vector strings
-           of the format 'X1' to 'X135'")
+           of the format 'X1' to 'X248'")
   }
 
-  fredmd_description <- fredmd_description
+  fredqd_description <- fredqd_description
 
   index <- c()
   for (name in varname) {
-    temp <- which.max(fredmd_description$varname == name)
+    temp <- which.max(fredqd_description$varname == name)
     index <- c(index, temp)
   }
 
-  data <- fredmd_description[index, -ncol(fredmd_description)]
+  data <- fredqd_description[index, -(ncol(fredqd_description)-1)]
 
   if (name.only) {
     outdata <- data[, c("description", "ttype")]

@@ -1,6 +1,6 @@
-#' @title Loading FRED-MD Data Set
+#' @title Loading FRED-QD Data Set
 #'
-#' @description \code{fredmd} loads the official FRED-MD data set and provides
+#' @description \code{fredqd} loads the official FRED-QD data set and provides
 #' a few tools to manipulate the data set.
 #'
 #' @import readr
@@ -10,11 +10,11 @@
 #' If \code{NULL}, select till the latest data available.
 #' @param date_end Date or \code{NULL}, the end date (included) of the data selection.
 #' If \code{NULL}, select up to the earliest data available.
-#' @param transform logical, indicating Whether or not the FRED-MD data set
+#' @param transform logical, indicating Whether or not the FRED-QD data set
 #' should be transformed according to the transformation code.
-#' @param local logical, indicating Whether or not the FRED-MD data set
+#' @param local logical, indicating Whether or not the FRED-QD data set
 #' should be loaded from the local files or downloaded online
-#' @return a subset of the (transformed) FRED-MD data of class \code{fredmd}.
+#' @return a subset of the (transformed) FRED-QD data of class \code{fredqd}.
 #'
 #' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
 #'
@@ -24,11 +24,11 @@
 #'
 #' @examples
 #' library(fbi)
-#' data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
+#' data <- fredqd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
 
 
 
-fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
+fredqd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
                    local = FALSE) {
   # Error checking
   if (!is.logical(transform))
@@ -41,13 +41,19 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
   if (class(date_start) == "Date") {
     if (as.numeric(format(date_start, "%d")) != 1)
       stop("'date_start' must be Date whose day is 1.")
-    if (date_start < as.Date("1959-01-01"))
-      stop("'date_start' must be later than 1959-01-01.")
+    if (!as.numeric(format(date_start, "%m")) %in% c(3,6,9,12))
+      stop("'date_start' must be Date whose month is March, June,
+           September, or December.")
+    if (date_start < as.Date("1959-03-01"))
+      stop("'date_start' must be later than 1959-03-01.")
   }
 
   if (class(date_end) == "Date") {
     if (as.numeric(format(date_end, "%d")) != 1)
       stop("'date_end' must be Date whose day is 1.")
+    if (!as.numeric(format(date_end, "%m")) %in% c(3,6,9,12))
+      stop("'date_end' must be Date whose month is March, June,
+           September, or December.")
   }
 
 
@@ -55,14 +61,14 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
   # Prepare raw data
   if (local) {
     # local files
-    rawdata <- fredmd_2020_04
+    rawdata <- fredqd_2020_03
 
   } else {
     # download online
-    dataurl <- "https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/monthly/current.csv"
+    dataurl <- "https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/quarterly/current.csv"
     rawdata <- readr::read_csv(url(dataurl), col_names = FALSE, col_types = cols(X1 = col_date(format = "%m/%d/%Y")),
-                               skip = 2)
-    rawdata <- rawdata[1:(nrow(rawdata) - 1), ] # remove NA rows
+                               skip = 3)
+    rawdata <- rawdata[1:(nrow(rawdata) - 2), ] # remove NA rows
     rawdata <- as.data.frame(rawdata)
     header <- c("date", colnames(rawdata))[1:ncol(rawdata)]
     colnames(rawdata) <- header
@@ -151,7 +157,7 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
 
   # Null case of date_start and date_end
   if (is.null(date_start))
-    date_start <- as.Date("1959-01-01")
+    date_start <- as.Date("1959-03-01")
   if (is.null(date_end))
     date_end <- data[, 1][nrow(data)]
 
@@ -161,7 +167,7 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
   index_end <- which.max(data[, 1] == date_end)
 
   outdata <- data[index_start:index_end, ]
-  class(outdata) <- c("data.frame", "fredmd")
+  class(outdata) <- c("data.frame", "fredqd")
   return(outdata)
 
 }
