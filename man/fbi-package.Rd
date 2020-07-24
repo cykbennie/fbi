@@ -4,11 +4,11 @@
 \name{fbi-package}
 \alias{fbi-package}
 \alias{fbi}
-\title{Factor-Based Imputation and FRED-MD Data Set}
+\title{Factor-Based Imputation and FRED-MD/QD Data Set}
 \description{
 The \code{fbi} package contains functions to estimate factor
 models and impute missing data based on factor models. It also includes
-functions to load and prepare the FRED-MD data set.
+functions to load and prepare the FRED-MD/QD data set.
 }
 \details{
 See \code{vignette("factor_fred", package = "fbi")}

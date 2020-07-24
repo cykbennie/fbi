@@ -71,7 +71,7 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
 
 
   # Import tcode tcodes is an internal data of the R package
-  tcode <- tcodes
+  tcode <- tcodes_md
 
 
   # Subfunction transxf: data transformation based on tcodes
