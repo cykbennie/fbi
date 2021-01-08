@@ -4,26 +4,32 @@
 \alias{tw_apc}
 \title{Tall-Wide Imputation of Missing Value in Panel Data}
 \usage{
-tw_apc(X1, r1, center = FALSE, standardize = FALSE, re_estimate = TRUE)
+tw_apc(X, kmax, center = FALSE, standardize = FALSE, re_estimate = TRUE)
 }
 \arguments{
-\item{X1}{a matrix of size T by N.}
+\item{X}{a matrix of size T by N with missing values.}
 
-\item{r1}{integer, indicating the maximum number of factors.}
+\item{kmax}{integer, indicating the maximum number of factors.}
 
-\item{center}{logical, indicating whether or not X1 should be demeaned}
+\item{center}{logical, indicating whether or not X should be demeaned}
 
-\item{standardize}{logical, indicating whether or not X1 should be scaled.}
+\item{standardize}{logical, indicating whether or not X should be scaled.}
 
 \item{re_estimate}{logical, indicating whether or not output factors,
 `Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.}
 }
 \value{
 a list of elements:
-\item{Fhat}{}
-\item{Lamhat}{}
-\item{Chat}{}
-\item{data}{}
+\item{Fhat}{estimated F}
+\item{Lamhat}{estimated Lambda}
+\item{Chat}{euqals Fhat x Lamhat'}
+\item{data}{X with missing data imputed}
+\item{X}{the original data with missing values}
+\item{kmax}{the maximum number of factors}
+\item{center}{logical, indicating whether or not X was demeaned in the algorithm}
+\item{standardize}{logical, indicating whether or not X was scaled in the algorithm}
+\item{re_estimate}{logical, indicating whether or not output factors,
+`Fhat`, `Lamhat`, and `Chat`, were re-estimated from the imputed data}
 }
 \description{
 \code{tw_apc} imputates the missing values in a given panel data using the
@@ -34,7 +40,7 @@ Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and F
 \url{https://arxiv.org/abs/1910.06677}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

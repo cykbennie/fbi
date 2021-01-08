@@ -12,7 +12,7 @@
 #' for an example using the FRED-MD dataset
 #' (\url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}).
 #'
-#' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
+#' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #' @author Serena Ng <serena.ng@@columbia.edu>
 #' @author Jushan Bai <jushan.bai@@columbia.edu>
 #'

@@ -26,7 +26,7 @@ a list of elements:
 \code{removeFE} removes fixed effects from the panel data.
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

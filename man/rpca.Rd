@@ -44,11 +44,11 @@ a list of elements:
 Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.
 \url{https://doi.org/10.1111/1468-0262.00273}
 
-Jushan Bai and Serena Ng (2017), \emph{Rank regularized estimation of approximate factor models}.
+Jushan Bai and Serena Ng (2019), \emph{Rank regularized estimation of approximate factor models}.
 \url{https://doi.org/10.1016/j.jeconom.2019.04.021}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

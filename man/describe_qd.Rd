@@ -32,5 +32,5 @@ Michael W. McCracken and Serena Ng (2020), \emph{FRED-QD Updated Appendix}.
 \url{https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/FRED-QD_appendix.pdf}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 }

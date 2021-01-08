@@ -6,16 +6,18 @@
 #' @export
 #'
 #' @param X a matrix of size T by N.
-#' @param r integer, indicating the maximum number of factors.
+#' @param kmax integer, indicating the maximum number of factors.
 #'
 #' @return a list of elements:
 #' \item{Fhat}{}
 #' \item{Lamhat}{}
+#' \item{Chat}{}
 #' \item{d}{}
 #' \item{d0}{}
 #' \item{ehat}{}
+#' \item{Chat}{euqals Fhat x Lamhat'}
 #'
-#' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
+#' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #' @author Serena Ng <serena.ng@@columbia.edu>
 #' @author Jushan Bai <jushan.bai@@columbia.edu>
 #'
@@ -25,14 +27,14 @@
 
 
 
-apc <- function(X, r){
+apc <- function(X, kmax){
   # Error checking
   if (! is.matrix(X))
     try(X <- as.matrix(X))
-  if (! is.numeric(r))
-    stop("'r' must be an integer.")
-  if (r > min(nrow(X), ncol(X)))
-    stop("'r' must be smaller than the size of X.")
+  if (! is.numeric(kmax))
+    stop("'kmax' must be an integer.")
+  if (kmax > min(nrow(X), ncol(X)))
+    stop("'kmax' must be smaller than the size of X.")
 
   # Create output object
   out <- list()
@@ -45,13 +47,15 @@ apc <- function(X, r){
   V <- svd_model$v
   D <- diag(d)
   D <- D / (sqrt(N*T))
-  Dr <- D[1:r, 1:r]
+  Dr <- D[1:kmax, 1:kmax]
 
-  out$Fhat <- sqrt(T) * U[, 1:r]
-  out$Lamhat <- sqrt(N) * V[, 1:r] %*% Dr
-  out$d <- d[1:r]
+  out$Fhat <- sqrt(T) * U[, 1:kmax]
+  out$Lamhat <- sqrt(N) * V[, 1:kmax] %*% Dr
+  out$Chat <- out$Fhat %*% t(out$Lamhat)
+  out$d <- d[1:kmax]
   out$d0 <- d
-  out$ehat <- X - out$Fhat %*% t(out$Lamhat)
+  out$ehat <- X - out$Chat
+  out$kmax <- kmax
 
   return(out)
 }

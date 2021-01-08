@@ -11,7 +11,7 @@
 #'
 #' @return FRED-MD data of class \code{fredmd} with outliers removed.
 #'
-#' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
+#' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #'
 #' @references
 #' Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly and Quarterly Databases for Macroeconomic Research}.

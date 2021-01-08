@@ -28,7 +28,7 @@ Jushan Bai and Serena Ng (2017), \emph{Rank regularized estimation of approximat
 \url{https://doi.org/10.1016/j.jeconom.2019.04.021}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

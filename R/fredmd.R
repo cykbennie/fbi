@@ -16,7 +16,7 @@
 #' should be loaded from the local files or downloaded online
 #' @return a subset of the (transformed) FRED-MD data of class \code{fredmd}.
 #'
-#' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
+#' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #'
 #' @references
 #' Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly and Quarterly Databases for Macroeconomic Research}.

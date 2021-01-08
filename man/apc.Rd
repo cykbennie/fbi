@@ -4,20 +4,22 @@
 \alias{apc}
 \title{Factor Model of Balanced Panel Data}
 \usage{
-apc(X, r)
+apc(X, kmax)
 }
 \arguments{
 \item{X}{a matrix of size T by N.}
 
-\item{r}{integer, indicating the maximum number of factors.}
+\item{kmax}{integer, indicating the maximum number of factors.}
 }
 \value{
 a list of elements:
 \item{Fhat}{}
 \item{Lamhat}{}
+\item{Chat}{}
 \item{d}{}
 \item{d0}{}
 \item{ehat}{}
+\item{Chat}{euqals Fhat x Lamhat'}
 }
 \description{
 \code{apc} estiamtes the factor model of a given balanced panel data.
@@ -27,7 +29,7 @@ Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in appr
 \url{https://doi.org/10.1111/1468-0262.00273}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

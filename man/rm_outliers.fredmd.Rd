@@ -26,5 +26,5 @@ Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly an
 \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 }

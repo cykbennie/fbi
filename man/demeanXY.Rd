@@ -26,7 +26,7 @@ a list of elements:
 \code{demeanXY} demeans the panel data.
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

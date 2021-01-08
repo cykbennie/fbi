@@ -26,7 +26,7 @@ Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and F
 \url{https://arxiv.org/abs/1910.06677}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 
 Serena Ng <serena.ng@columbia.edu>
 

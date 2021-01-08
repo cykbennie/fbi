@@ -15,7 +15,7 @@
 #' \item{V}{}
 #' \item{it1}{}
 #'
-#' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
+#' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #' @author Serena Ng <serena.ng@@columbia.edu>
 #' @author Jushan Bai <jushan.bai@@columbia.edu>
 #'

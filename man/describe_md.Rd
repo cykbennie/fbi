@@ -32,5 +32,5 @@ Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD Updated Appendix}.
 \url{https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/Appendix_Tables_Update.pdf}
 }
 \author{
-Yankang (Bennie) Chen <yankang.chen@columbia.edu>
+Yankang (Bennie) Chen <yankang.chen@yale.edu>
 }

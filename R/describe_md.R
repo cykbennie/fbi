@@ -15,7 +15,7 @@
 #'
 #' @return a vector of variable names, or a data frame with detailed descriptions.
 #'
-#' @author Yankang (Bennie) Chen <yankang.chen@@columbia.edu>
+#' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #'
 #' @references
 #' Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD Updated Appendix}.
