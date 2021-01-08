@@ -43,7 +43,7 @@ Refer to the [fbi.pdf](fbi.pdf) file for details.
 
 ## Author
 
-* Yankang (Bennie) Chen (<yankang.chen@columbia.edu>)
+* Yankang (Bennie) Chen (<yankang.chen@yale.edu>)
 
 ## License
 
