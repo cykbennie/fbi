@@ -16,11 +16,6 @@ FRED-MD data of class \code{fredmd} with outliers removed.
 \code{rm_outliers.fredmd} removes outliers of the FRED-MD data set produced by
 the \code{\link{fredmd}} function.
 }
-\examples{
-library(fbi)
-data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE)
-newdata <- rm_outliers.fredmd(data)
-}
 \references{
 Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly and Quarterly Databases for Macroeconomic Research}.
 \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}

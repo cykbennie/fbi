@@ -1,8 +1,8 @@
 Package: fbi
 Type: Package
 Title: Factor-Based Imputation and FRED-MD Data Set
-Version: 0.3.0
-Date: 2021-01-07
+Version: 0.4.0
+Date: 2021-02-03
 Authors@R: c(person("Yankang (Bennie)", "Chen", email = "yankang.chen@yale.edu", role = c("aut", "cre")),
     person("Serena", "Ng", email = "serena.ng@columbia.edu", role = "aut"),
     person("Jushan", "Bai", email = "jushan.bai@columbia.edu", role = "aut"))

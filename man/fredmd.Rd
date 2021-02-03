@@ -4,9 +4,11 @@
 \alias{fredmd}
 \title{Loading FRED-MD Data Set}
 \usage{
-fredmd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
+fredmd(file = "", date_start = NULL, date_end = NULL, transform = TRUE)
 }
 \arguments{
+\item{file}{Either a path to a file, a connection, or literal data (either a single string or a raw vector).}
+
 \item{date_start}{Date or \code{NULL}, the start date (included) of the data selection.
 If \code{NULL}, select till the latest data available.}
 
@@ -15,9 +17,6 @@ If \code{NULL}, select up to the earliest data available.}
 
 \item{transform}{logical, indicating Whether or not the FRED-MD data set
 should be transformed according to the transformation code.}
-
-\item{local}{logical, indicating Whether or not the FRED-MD data set
-should be loaded from the local files or downloaded online}
 }
 \value{
 a subset of the (transformed) FRED-MD data of class \code{fredmd}.
@@ -25,10 +24,6 @@ a subset of the (transformed) FRED-MD data of class \code{fredmd}.
 \description{
 \code{fredmd} loads the official FRED-MD data set and provides
 a few tools to manipulate the data set.
-}
-\examples{
-library(fbi)
-data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
 }
 \references{
 Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly and Quarterly Databases for Macroeconomic Research}.

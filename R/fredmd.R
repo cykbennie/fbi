@@ -6,14 +6,13 @@
 #' @import readr
 #' @export
 #'
+#' @param file Either a path to a file, a connection, or literal data (either a single string or a raw vector).
 #' @param date_start Date or \code{NULL}, the start date (included) of the data selection.
 #' If \code{NULL}, select till the latest data available.
 #' @param date_end Date or \code{NULL}, the end date (included) of the data selection.
 #' If \code{NULL}, select up to the earliest data available.
 #' @param transform logical, indicating Whether or not the FRED-MD data set
 #' should be transformed according to the transformation code.
-#' @param local logical, indicating Whether or not the FRED-MD data set
-#' should be loaded from the local files or downloaded online
 #' @return a subset of the (transformed) FRED-MD data of class \code{fredmd}.
 #'
 #' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
@@ -21,15 +20,10 @@
 #' @references
 #' Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD and FRED-QD: Monthly and Quarterly Databases for Macroeconomic Research}.
 #' \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}
-#'
-#' @examples
-#' library(fbi)
-#' data <- fredmd(date_start = NULL, date_end = NULL, transform = TRUE, local = FALSE)
 
 
 
-fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
-                   local = FALSE) {
+fredmd <- function(file = "", date_start = NULL, date_end = NULL, transform = TRUE) {
   # Error checking
   if (!is.logical(transform))
     stop("'transform' must be logical.")
@@ -51,23 +45,13 @@ fredmd <- function(date_start = NULL, date_end = NULL, transform = TRUE,
   }
 
 
-
   # Prepare raw data
-  if (local) {
-    # local files
-    rawdata <- fredmd_2020_04
-
-  } else {
-    # download online
-    dataurl <- "https://s3.amazonaws.com/files.fred.stlouisfed.org/fred-md/monthly/current.csv"
-    rawdata <- readr::read_csv(url(dataurl), col_names = FALSE, col_types = cols(X1 = col_date(format = "%m/%d/%Y")),
-                               skip = 2)
-    rawdata <- rawdata[1:(nrow(rawdata) - 1), ] # remove NA rows
-    rawdata <- as.data.frame(rawdata)
-    header <- c("date", colnames(rawdata))[1:ncol(rawdata)]
-    colnames(rawdata) <- header
-  }
-
+  rawdata <- readr::read_csv(file, col_names = FALSE, col_types = cols(X1 = col_date(format = "%m/%d/%Y")),
+                             skip = 2)
+  rawdata <- rawdata[1:(nrow(rawdata) - 1), ] # remove NA rows
+  rawdata <- as.data.frame(rawdata)
+  header <- c("date", colnames(rawdata))[1:ncol(rawdata)]
+  colnames(rawdata) <- header
 
 
   # Import tcode tcodes is an internal data of the R package
