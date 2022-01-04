@@ -1,0 +1,70 @@
+---
+title: "Factor model using the FRED-MD data set"
+author: "Yankang Bennie Chen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{factor_fred}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# Import data
+
+```{r}
+library(fbi)
+
+data <- fredmd("2021-08.csv" ,date_start = NULL, date_end = NULL, transform = TRUE)
+N <- ncol(data)
+
+# View the head lines of data
+head(data)
+```
+
+
+
+## Check for outliers
+
+```{r}
+data_clean <- rm_outliers.fredmd(data)
+```
+
+
+# Factor Model
+```{r}
+col_na_prop <- apply(is.na(data_clean), 2, mean)
+data_select <- data_clean[, (col_na_prop < 0.05)]
+data_bal <- na.omit(data_select)
+X_bal <- data_bal[,2:ncol(data_bal)]
+rownames(X_bal) <- data_bal[,1]
+
+# View balanced data
+head(X_bal)
+
+# Run rpca
+out <- rpca(X_bal, kmax = 8, standardize = FALSE, tau = 0)
+```
+
+
+## Estimates for F, Lambda, C
+
+```{r}
+head(out$Fhat)
+head(out$Lamhat)
+head(out$Chat)
+```
+
+## Standard Error of C^hat
+
+```{r}
+xpt <- list(c(1,2,3,4), c(2,3,4,5), c(3,4,5,6), c(4,5,6,7))
+
+se.rpca(object = out, xpoints = xpt, qq = 50)
+```
+

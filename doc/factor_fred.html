@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Yankang Bennie Chen" />
+
+<meta name="date" content="2022-01-04" />
+
+<title>Factor model using the FRED-MD data set</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Factor model using the FRED-MD data set</h1>
+<h4 class="author">Yankang Bennie Chen</h4>
+<h4 class="date">2022-01-04</h4>
+
+
+
+<div id="import-data" class="section level1">
+<h1>Import data</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fbi)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fredmd</span>(<span class="st">&quot;2021-08.csv&quot;</span> ,<span class="at">date_start =</span> <span class="cn">NULL</span>, <span class="at">date_end =</span> <span class="cn">NULL</span>, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">ncol</span>(data)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># View the head lines of data</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
+<pre><code>##         date         RPI     W875RX1 DPCERA3M086SBEA     CMRMTSPLx     RETAILx
+## 1 1959-01-01          NA          NA              NA            NA          NA
+## 2 1959-02-01 0.003931401 0.003612862     0.010367562  7.357623e-03 0.007309850
+## 3 1959-03-01 0.006430111 0.007359341     0.009410090 -3.422929e-03 0.008321199
+## 4 1959-04-01 0.006494121 0.007048639    -0.003639469  1.992210e-02 0.000615712
+## 5 1959-05-01 0.005763112 0.006616463     0.012005354  6.797312e-03 0.007803395
+## 6 1959-06-01 0.003102436 0.002973790     0.003708286 -5.152302e-05 0.009064341
+##        INDPRO     IPFPNSS     IPFINAL      IPCONGD    IPDCONGD     IPNCONGD
+## 1          NA          NA          NA           NA          NA           NA
+## 2 0.019395434 0.013403934 0.008622938  0.007309577 0.005232774  0.009512774
+## 3 0.014302533 0.006036092 0.004899273  0.000000000 0.019396966 -0.004745075
+## 4 0.021077409 0.014338028 0.014542339  0.015653375 0.006379474  0.016511466
+## 5 0.014950240 0.008269202 0.009583038  0.004768488 0.020151168  0.000000000
+## 6 0.001144385 0.007034448 0.007126417 -0.004768488 0.007451951 -0.007043724
+##      IPBUSEQ       IPMAT       IPDMAT       IPNMAT   IPMANSICS    IPB51222S
+## 1         NA          NA           NA           NA          NA           NA
+## 2 0.01329190  0.03117775  0.045031569  0.017354387 0.018213628 -0.002726511
+## 3 0.01074421  0.02563861  0.038644148  0.014912276 0.015524263  0.006802389
+## 4 0.02579024  0.02724405  0.029658204  0.030501353 0.021100685  0.004054350
+## 5 0.03189342  0.02543272  0.034046237  0.008941828 0.013828222  0.014735063
+## 6 0.02327254 -0.00657523 -0.007349862 -0.003002197 0.001141909  0.005308378
+##        IPFUELS  CUMFNS HWI  HWIURATIO      CLF16OV       CE16OV UNRATE UEMPMEAN
+## 1           NA      NA  NA         NA           NA           NA     NA       NA
+## 2 -0.013713506  1.2455  64 0.02480672 -0.004233513 -0.002885100   -0.1     -0.8
+## 3  0.024999499  1.0341 103 0.04256124  0.006174633  0.009112927   -0.3     -0.2
+## 4 -0.004499124  1.5153  65 0.04402628  0.003973408  0.007765374   -0.4     -0.4
+## 5 -0.019350373  0.9237  66 0.03073801 -0.002358682 -0.001065909   -0.1     -0.2
+## 6  0.000000000 -0.1473  62 0.02501767  0.001465674  0.002315745   -0.1      0.2
+##       UEMPLT5    UEMP5TO14    UEMP15OV   UEMP15T26    UEMP27OV      CLAIMSx
+## 1          NA           NA          NA          NA          NA           NA
+## 2 -0.01278790 -0.004286333 -0.08909743 -0.08609352 -0.09132809 -0.028292796
+## 3 -0.06308098 -0.062936140 -0.05389322 -0.02790879 -0.07368772 -0.083286961
+## 4  0.02370582 -0.157205050 -0.15236165 -0.26160983 -0.07478694 -0.055002526
+## 5 -0.01009090  0.073266382 -0.07388589 -0.04512044 -0.09293582  0.002184996
+## 6  0.02865908 -0.042689409 -0.00207469  0.06213178 -0.04809475  0.044765099
+##        PAYEMS      USGOOD CES1021000001        USCONS      MANEMP     DMANEMP
+## 1          NA          NA            NA            NA          NA          NA
+## 2 0.003993691 0.004988600 -0.0124190137 -0.0043529284 0.007770769 0.011263558
+## 3 0.006168304 0.009431298 -0.0001420152  0.0110129596 0.009481865 0.014154359
+## 4 0.005774220 0.010433607  0.0015610590  0.0236153972 0.008223516 0.012415634
+## 5 0.004285547 0.005640815  0.0067835195  0.0006480882 0.006607954 0.009102437
+## 6 0.002443325 0.004325444  0.0070175727  0.0042023660 0.004316878 0.005335088
+##      NDMANEMP      SRVPRD       USTPU    USWTRADE      USTRADE      USFIRE
+## 1          NA          NA          NA          NA           NA          NA
+## 2 0.002872190 0.003438059 0.003890695 0.002604928  0.005777347 0.000826788
+## 3 0.002863964 0.004339939 0.005256133 0.003488511  0.009303769 0.004123717
+## 4 0.002221870 0.003147200 0.002938748 0.004825053 -0.006687011 0.003696862
+## 5 0.003007521 0.003517827 0.004026728 0.004035130  0.011224166 0.003274665
+## 6 0.002840911 0.001374450 0.001733814 0.002834057  0.002105437 0.002856562
+##         USGOVT CES0600000007 AWOTMAN AWHMAN    HOUST  HOUSTNE  HOUSTMW   HOUSTS
+## 1           NA          39.8      NA   40.2 7.412764 5.857933 6.113682 6.224558
+## 2  0.001356267          39.7     0.1   40.3 7.418781 5.846439 6.150603 6.230481
+## 3  0.001969474          40.0     0.2   40.4 7.390181 5.799093 6.023448 6.220590
+## 4  0.001228954          40.2     0.1   40.5 7.371489 5.616771 5.968708 6.284134
+## 5  0.001350108          40.3     0.0   40.7 7.311886 5.560682 5.872118 6.188264
+## 6 -0.001227295          40.2     0.0   40.6 7.315218 5.537334 5.837730 6.249975
+##     HOUSTW PERMIT PERMITNE PERMITMW PERMITS PERMITW ACOGNO     AMDMNOx ANDENOx
+## 1 5.857933     NA       NA       NA      NA      NA     NA          NA      NA
+## 2 5.840642     NA       NA       NA      NA      NA     NA  0.04541551      NA
+## 3 5.924256     NA       NA       NA      NA      NA     NA  0.02216609      NA
+## 4 5.961005     NA       NA       NA      NA      NA     NA  0.01099010      NA
+## 5 5.981414     NA       NA       NA      NA      NA     NA -0.04303751      NA
+## 6 5.961005     NA       NA       NA      NA      NA     NA  0.04569262      NA
+##        AMDMUOx     BUSINVx    ISRATIOx         M1SL          M2SL      M2REAL
+## 1           NA          NA          NA           NA            NA          NA
+## 2  0.024493366 0.003436823 -0.02066225           NA            NA 0.004242431
+## 3  0.024973264 0.005133189 -0.01033112 -0.001443481  0.0013694646 0.006229924
+## 4  0.016413723 0.013336545  0.00000000 -0.002149768 -0.0020930189 0.002700947
+## 5 -0.003042673 0.005709503 -0.01033113  0.007132698  0.0041056073 0.005181359
+## 6  0.007620679 0.009996751  0.01033113 -0.003585337 -0.0007314619 0.004066457
+##       BOGMBASE      TOTRESNS    NONBORRES     BUSLOANS        REALLN
+## 1           NA            NA           NA           NA            NA
+## 2           NA            NA           NA           NA            NA
+## 3  0.011948301  5.189425e-03 -0.005645624 -0.002751700 -0.0043834064
+## 4  0.010026126  2.698378e-02  0.027810541  0.014651216  0.0042067430
+## 5 -0.008016075 -2.153480e-02 -0.022347066  0.008724930 -0.0005894976
+## 6  0.003984069 -2.890549e-05 -0.005742821  0.001885236 -0.0018191954
+##        NONREVSL      CONSPI      S&amp;P 500 S&amp;P: indust S&amp;P div yield S&amp;P PE ratio
+## 1            NA          NA           NA          NA            NA           NA
+## 2            NA 0.000800399 -0.015400250 -0.01649277    0.06117566 -0.001498613
+## 3 -0.0012942776 0.000357825  0.025062161  0.02472188   -0.06780858  0.031069936
+## 4 -0.0008566705 0.000067223  0.016599357  0.01872311   -0.04020327  0.014298930
+## 5  0.0016473458 0.000567432  0.014949001  0.01902342   -0.03467728  0.011409877
+## 6  0.0022963690 0.000899164 -0.008664064 -0.00549097    0.03838173 -0.020283710
+##   FEDFUNDS CP3Mx TB3MS TB6MS  GS1   GS5  GS10   AAA   BAA COMPAPFFx TB3SMFFM
+## 1       NA    NA    NA    NA   NA    NA    NA    NA    NA      0.82     0.34
+## 2    -0.05 -0.04 -0.12  0.04 0.18 -0.05 -0.06  0.02  0.02      0.83     0.27
+## 3     0.37  0.09  0.10  0.00 0.07  0.03  0.03 -0.01 -0.04      0.55     0.00
+## 4     0.16  0.07  0.15  0.14 0.11  0.13  0.13  0.10  0.01      0.46    -0.01
+## 5    -0.06  0.14 -0.11  0.06 0.24  0.23  0.19  0.14  0.10      0.66    -0.06
+## 6     0.49  0.27  0.37  0.19 0.11  0.15  0.03  0.09  0.08      0.44    -0.18
+##   TB6SMFFM T1YFFM T5YFFM T10YFFM AAAFFM BAAFFM TWEXAFEGSMTHx       EXSZUSx
+## 1     0.61   0.88   1.53    1.54   1.64   2.39            NA            NA
+## 2     0.70   1.11   1.53    1.53   1.71   2.46            NA  2.550577e-04
+## 3     0.33   0.81   1.19    1.19   1.33   2.05            NA  2.200068e-03
+## 4     0.31   0.76   1.16    1.16   1.27   1.90            NA -4.626738e-05
+## 5     0.43   1.06   1.45    1.41   1.47   2.06            NA  4.626738e-05
+## 6     0.13   0.68   1.11    0.95   1.07   1.65            NA -2.617469e-03
+##   EXJPUSx       EXUSUKx       EXCAUSx   WPSFD49207   WPSFD49502      WPSID61
+## 1      NA            NA            NA           NA           NA           NA
+## 2       0  0.0009971866  0.0079304190           NA           NA           NA
+## 3       0  0.0012095341 -0.0051424571 -0.003016594 -0.002998503 -0.003262646
+## 4       0  0.0013501032 -0.0064135939  0.000000000  0.005997006  0.000000000
+## 5       0 -0.0007103534 -0.0006228589  0.003007521 -0.005997006  0.006493529
+## 6       0 -0.0007108584 -0.0041623369 -0.006015042  0.005997006 -0.006493529
+##         WPSID62   OILPRICEx       PPICMM      CPIAUCSL      CPIAPPSL
+## 1            NA          NA           NA            NA            NA
+## 2            NA          NA           NA            NA            NA
+## 3  9.528881e-03 -0.01005034  0.012232568 -0.0006902501  2.234638e-03
+## 4  3.149482e-03  0.01005034 -0.018330148  0.0013801433  2.234638e-03
+## 5 -1.265827e-02  0.00000000  0.012195160  0.0017231280 -4.982474e-06
+## 6 -4.031323e-05  0.00000000 -0.003062676  0.0003393147 -4.960305e-06
+##       CPITRNSL      CPIMEDSL  CUSR0000SAC  CUSR0000SAD   CUSR0000SAS
+## 1           NA            NA           NA           NA            NA
+## 2           NA            NA           NA           NA            NA
+## 3  0.003372529 -2.225016e-05 -0.003007521  0.005235614 -4.357305e-03
+## 4 -0.003407003 -4.705891e-03  0.003007521 -0.005235614  4.338402e-03
+## 5 -0.003372684  4.683849e-03  0.003007521  0.002607563 -1.874045e-05
+## 6  0.003361348 -2.183621e-05 -0.003007521 -0.002607563 -4.319661e-03
+##        CPIULFSL CUSR0000SA0L2 CUSR0000SA0L5         PCEPI DDURRG3M086SBEA
+## 1            NA            NA            NA            NA              NA
+## 2            NA            NA            NA            NA              NA
+## 3  0.000000e+00   0.000000000   0.000000000 -0.0002497837    0.0006662958
+## 4  3.454235e-03   0.000000000   0.000000000  0.0013047306   -0.0002292750
+## 5 -1.189068e-05   0.000000000   0.000000000 -0.0014307055    0.0006463130
+## 6 -1.180909e-05   0.003252035   0.003372684  0.0022926272    0.0003289460
+##   DNDGRG3M086SBEA DSERRG3M086SBEA CES0600000008 CES2000000008 CES3000000008
+## 1              NA              NA            NA            NA            NA
+## 2              NA              NA            NA            NA            NA
+## 3    -0.001124066    0.0002618035 -2.183621e-05  -0.008146651   0.004818829
+## 4     0.001348994    0.0017523664 -2.163355e-05   0.012203451  -0.004889528
+## 5    -0.001686534   -0.0019367283 -2.143370e-05  -0.004089717  -0.004819286
+## 6     0.003315797    0.0020934037 -4.618946e-03   0.003991762   0.004796172
+##   UMCSENTx DTCOLNVHFNM    DTCTHFNM      INVEST VXOCLSx
+## 1       NA          NA          NA          NA      NA
+## 2       NA          NA          NA          NA      NA
+## 3       NA 0.004929154 0.004138441 -0.01479236      NA
+## 4       NA 0.012134027 0.006734296  0.02492924      NA
+## 5       NA 0.002828300 0.002020399 -0.01534223      NA
+## 6       NA 0.009726265 0.009006692 -0.01225183      NA</code></pre>
+<div id="check-for-outliers" class="section level2">
+<h2>Check for outliers</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> <span class="fu">rm_outliers.fredmd</span>(data)</span></code></pre></div>
+</div>
+</div>
+<div id="factor-model" class="section level1">
+<h1>Factor Model</h1>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>col_na_prop <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="fu">is.na</span>(data_clean), <span class="dv">2</span>, mean)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_select <span class="ot">&lt;-</span> data_clean[, (col_na_prop <span class="sc">&lt;</span> <span class="fl">0.05</span>)]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data_bal <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data_select)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>X_bal <span class="ot">&lt;-</span> data_bal[,<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(data_bal)]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(X_bal) <span class="ot">&lt;-</span> data_bal[,<span class="dv">1</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View balanced data</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(X_bal)</span></code></pre></div>
+<pre><code>##                     RPI       W875RX1 DPCERA3M086SBEA    CMRMTSPLx      RETAILx
+## 1960-01-01 0.0031940922  0.0046382466    0.0027884687  0.016956461  0.026605507
+## 1960-02-01 0.0011425352  0.0009167431    0.0043345442  0.014371484  0.003696454
+## 1960-03-01 0.0019087630  0.0009159035    0.0140409211 -0.028026117 -0.001101989
+## 1960-04-01 0.0034187427  0.0036137862    0.0153552839  0.009826465  0.025903391
+## 1960-05-01 0.0024005380  0.0024433183   -0.0203433722 -0.031530520 -0.015046831
+## 1960-06-01 0.0007885359 -0.0002482005   -0.0002198285  0.008585775 -0.001364294
+##                  INDPRO      IPFPNSS      IPFINAL      IPCONGD     IPDCONGD
+## 1960-01-01  0.025916873  0.024096974  0.029019748  0.031234368  0.103832941
+## 1960-02-01 -0.008936957 -0.005686063 -0.003436565 -0.011454070 -0.013858951
+## 1960-03-01 -0.009017547 -0.003424831 -0.001149540  0.001151627 -0.019965414
+## 1960-04-01 -0.007962368  0.002284524  0.001149540  0.006879088 -0.001187513
+## 1960-05-01 -0.001141466  0.005692532  0.006865495  0.005699098  0.009460854
+## 1960-06-01 -0.012651446 -0.011413657 -0.011467424 -0.006842826 -0.010644924
+##                IPNCONGD      IPBUSEQ        IPMAT      IPDMAT        IPNMAT
+## 1960-01-01  0.004561117  0.036335038  0.028479676  0.03905408  0.0152417833
+## 1960-02-01 -0.010290033  0.006457017 -0.013041708 -0.01669856 -0.0061483818
+## 1960-03-01  0.009153577  0.002146699 -0.016551787 -0.03209370  0.0004393588
+## 1960-04-01  0.010196749 -0.010768985 -0.023635243 -0.03653048 -0.0087969318
+## 1960-05-01  0.003378407  0.003240718 -0.009152023 -0.01362039  0.0015603353
+## 1960-06-01 -0.005634556 -0.013048367 -0.016225134 -0.03251881  0.0008784994
+##               IPMANSICS    IPB51222S      IPFUELS  CUMFNS HWI    HWIURATIO
+## 1960-01-01  0.026969611 -0.008822601 -0.012664759  1.9934 426  0.122288167
+## 1960-02-01 -0.007792918 -0.001267418  0.010373974 -0.9508   0  0.046841475
+## 1960-03-01 -0.012366897  0.037318192  0.010267459 -1.3687 -86 -0.086165236
+## 1960-04-01 -0.007947801  0.001221021  0.030187406 -0.9828 -40  0.003764053
+## 1960-05-01 -0.005718481 -0.012273261 -0.027919995 -0.7882 -23  0.000838637
+## 1960-06-01 -0.011536011  0.006153194 -0.004539976 -1.2475 -40 -0.037326051
+##                  CLF16OV        CE16OV UNRATE UEMPMEAN     UEMPLT5   UEMP5TO14
+## 1960-01-01 -0.0004639160  9.182174e-05   -0.1      0.4 -0.01153275 -0.07109592
+## 1960-02-01 -0.0001885274  4.168995e-03   -0.4     -0.4 -0.13510248 -0.01058211
+## 1960-03-01 -0.0080088962 -1.453672e-02    0.6     -0.1  0.15205204  0.07989391
+## 1960-04-01  0.0171045930  1.968953e-02   -0.2     -0.4  0.04058187 -0.11133068
+## 1960-05-01  0.0006752631  1.484669e-03   -0.1     -0.7 -0.00984659  0.06939199
+## 1960-06-01  0.0044138793  1.678957e-03    0.3      0.0  0.01157420  0.09581792
+##                UEMP15OV    UEMP15T26     UEMP27OV     CLAIMSx       PAYEMS
+## 1960-01-01 -0.005449605 -0.006644543 -0.004291852  0.01547005  0.001844202
+## 1960-02-01 -0.084332405 -0.088224233 -0.080580487 -0.01999880  0.004393914
+## 1960-03-01  0.131299415  0.230880534  0.025317808  0.13272251 -0.001082897
+## 1960-04-01 -0.067950662 -0.109866478 -0.020666637 -0.03075871  0.006571084
+## 1960-05-01 -0.117085734 -0.130770231 -0.102528746  0.05758206 -0.006185511
+## 1960-06-01  0.069076515  0.115602010  0.017834868  0.01385388 -0.002334066
+##                  USGOOD CES1021000001       USCONS       MANEMP      DMANEMP
+## 1960-01-01  0.003391924  -0.012314534 -0.012173205  0.007293698  0.010823788
+## 1960-02-01  0.005831815   0.007117468  0.010536811  0.004959949  0.007400688
+## 1960-03-01 -0.011904292  -0.002463591 -0.057987258 -0.003685820 -0.006109671
+## 1960-04-01  0.003761049   0.005354184  0.041807278 -0.003379997 -0.006363609
+## 1960-05-01 -0.003709432  -0.010299649  0.005643169 -0.005059411 -0.007930083
+## 1960-06-01 -0.006940516  -0.005556382 -0.007309003 -0.007022998 -0.009974325
+##                 NDMANEMP        SRVPRD         USTPU     USWTRADE       USTRADE
+## 1960-01-01  0.0021905814  0.0009779671  0.0024364945 -0.001428679  0.0047283972
+## 1960-02-01  0.0014057011  0.0035872676  0.0031496089  0.001766752  0.0042938954
+## 1960-03-01 -0.0001560915  0.0049436441 -0.0011686970  0.001576163 -0.0008967806
+## 1960-04-01  0.0009361836  0.0081195086  0.0144671214  0.003929572  0.0174672270
+## 1960-05-01 -0.0009361836 -0.0075495619 -0.0108754860 -0.002093850 -0.0132057297
+## 1960-06-01 -0.0028138208  0.0001994046 -0.0008967002 -0.001385846 -0.0003574109
+##                 USFIRE       USGOVT CES0600000007 AWOTMAN AWHMAN    HOUST
+## 1960-01-01 0.002005214 -0.007316374          40.1     0.3   40.6 7.286192
+## 1960-02-01 0.003998406  0.002284616          39.7    -0.2   40.3 7.315218
+## 1960-03-01 0.002789402  0.023619874          39.5    -0.1   40.0 7.011214
+## 1960-04-01 0.002781643  0.001055162          39.8    -0.4   40.0 7.161622
+## 1960-05-01 0.001189768 -0.012024193          39.6     0.3   40.1 7.147559
+## 1960-06-01 0.001979807  0.000000000          39.5    -0.2   39.9 7.128496
+##             HOUSTNE  HOUSTMW   HOUSTS   HOUSTW   PERMIT PERMITNE PERMITMW
+## 1960-01-01 5.613128 5.880533 6.226537 5.774552 6.995766 5.505332 5.533389
+## 1960-02-01 5.594711 5.948035 6.188264 5.897154 6.992096 5.446737 5.545177
+## 1960-03-01 4.983607 5.327876 6.059123 5.796058 6.861711 5.111988 5.241747
+## 1960-04-01 5.384495 5.662960 6.144186 5.758902 6.923629 5.241747 5.497168
+## 1960-05-01 5.370638 5.697093 6.126869 5.703782 6.958448 5.411646 5.480639
+## 1960-06-01 5.337538 5.777652 6.011267 5.730100 6.864848 5.170484 5.361292
+##             PERMITS  PERMITW     AMDMNOx      AMDMUOx      BUSINVx    ISRATIOx
+## 1960-01-01 5.802118 5.568345 -0.03901731 -0.028030891 0.0085382848 -0.01033113
+## 1960-02-01 5.720312 5.686975 -0.00335896 -0.023230848 0.0111302519  0.02066225
+## 1960-03-01 5.609472 5.789960 -0.01112605 -0.022625200 0.0081615801  0.03099338
+## 1960-04-01 5.655992 5.693732 -0.01078816 -0.018693813 0.0001055577 -0.01033112
+## 1960-05-01 5.710427 5.655992  0.01203052 -0.011083605 0.0059984395  0.03099338
+## 1960-06-01 5.652489 5.648974  0.01896558 -0.004504926 0.0022009127  0.01033113
+##                     M1SL          M2SL        M2REAL     BOGMBASE      TOTRESNS
+## 1960-01-01  4.282151e-03 -1.011056e-03  0.0026628548 -0.027374781 -3.185951e-02
+## 1960-02-01 -1.429082e-03 -6.718161e-04 -0.0006896892 -0.006279180 -2.185317e-02
+## 1960-03-01 -5.109339e-07  2.341081e-03  0.0030507331  0.019916913  2.138544e-02
+## 1960-04-01 -7.165876e-04 -3.422089e-04 -0.0017702601  0.006050428  1.659002e-02
+## 1960-05-01  1.431639e-03 -7.106398e-06  0.0016719945 -0.004032264 -3.052456e-05
+## 1960-06-01  0.000000e+00  1.979687e-03  0.0032376776  0.006018072 -3.019005e-05
+##                NONBORRES     BUSLOANS        REALLN     NONREVSL       CONSPI
+## 1960-01-01 -0.0112359551 -0.006756504 -0.0093536850 -0.021859426 -0.000345695
+## 1960-02-01 -0.0333333333 -0.004530665 -0.0016089925  0.006124488  0.000546748
+## 1960-03-01  0.0333333333  0.001802545  0.0006122567  0.002588954  0.000869140
+## 1960-04-01  0.0057471264  0.006563759 -0.0016081458  0.006011050  0.001046178
+## 1960-05-01  0.0056814450 -0.003075954 -0.0019452078 -0.010668356  0.000080104
+## 1960-06-01 -0.0001291364  0.002006163 -0.0007841454  0.003352330  0.000869342
+##                 S&amp;P 500 S&amp;P: indust S&amp;P div yield S&amp;P PE ratio FEDFUNDS CP3Mx
+## 1960-01-01 -0.017593758 -0.02050457    0.11818887 -0.025551636     0.00  0.03
+## 1960-02-01 -0.039544736 -0.04382419    0.19547595 -0.052881363    -0.02 -0.25
+## 1960-03-01 -0.013718627 -0.01504550    0.11378187 -0.021169864    -0.13 -0.17
+## 1960-04-01  0.012821846  0.01269375   -0.03894587  0.003859329     0.08 -0.33
+## 1960-05-01 -0.009193395 -0.01048192    0.03825412 -0.011263300    -0.07  0.09
+## 1960-06-01  0.036277093  0.03703509   -0.11978012  0.034284162    -0.53 -0.44
+##            TB3MS TB6MS   GS1   GS5  GS10   AAA   BAA COMPAPFFx TB3SMFFM
+## 1960-01-01 -0.14 -0.11 -0.11 -0.09  0.03  0.03  0.06      0.92     0.36
+## 1960-02-01 -0.39 -0.44 -0.37 -0.23 -0.23 -0.05  0.00      0.69    -0.01
+## 1960-03-01 -0.65 -0.69 -0.64 -0.38 -0.24 -0.07 -0.09      0.65    -0.53
+## 1960-04-01 -0.08 -0.06  0.02 -0.02  0.03 -0.04 -0.05      0.24    -0.69
+## 1960-05-01  0.06  0.03  0.17  0.20  0.07  0.01  0.08      0.40    -0.56
+## 1960-06-01 -0.83 -0.84 -0.85 -0.37 -0.20 -0.01 -0.02      0.49    -0.86
+##            TB6SMFFM T1YFFM T5YFFM T10YFFM AAAFFM BAAFFM       EXSZUSx
+## 1960-01-01     0.75   1.04   0.93    0.73   0.62   1.35  0.0006473390
+## 1960-02-01     0.33   0.69   0.72    0.52   0.59   1.37  0.0024929610
+## 1960-03-01    -0.23   0.18   0.47    0.41   0.65   1.41 -0.0001613926
+## 1960-04-01    -0.37   0.12   0.37    0.36   0.53   1.28  0.0004380050
+## 1960-05-01    -0.27   0.36   0.64    0.50   0.61   1.43 -0.0033012854
+## 1960-06-01    -0.58   0.04   0.80    0.83   1.13   1.94 -0.0021992022
+##                  EXJPUSx       EXUSUKx       EXCAUSx   WPSFD49207   WPSFD49502
+## 1960-01-01  0.0003605374  0.0005001608  0.0019952750  0.003025721  0.003016594
+## 1960-02-01  0.0007209625  0.0012493086 -0.0015748861 -0.003025721 -0.003016594
+## 1960-03-01  0.0000000000  0.0009270485 -0.0007357965  0.009022618  0.011976191
+## 1960-04-01 -0.0010814999  0.0012821884  0.0125393493 -0.009022618 -0.011976191
+## 1960-05-01  0.0007209450 -0.0012465499  0.0155585025  0.000000000  0.000000000
+## 1960-06-01  0.0021652575 -0.0011767434  0.0043866431  0.000000000  0.000000000
+##                 WPSID61      WPSID62 OILPRICEx        PPICMM      CPIAUCSL
+## 1960-01-01 -0.003241494  0.009873867         0  2.064498e-02 -0.0034032136
+## 1960-02-01  0.006482988 -0.003294896         0 -1.180810e-02  0.0027220147
+## 1960-03-01 -0.003241494  0.009820046         0 -5.839420e-03 -0.0013610074
+## 1960-04-01 -0.003241494 -0.006568011         0 -8.549676e-06  0.0044105245
+## 1960-05-01  0.003241494 -0.003252035         0  2.928260e-03 -0.0033954678
+## 1960-06-01  0.003241494 -0.013072082         0  2.928260e-03  0.0003367515
+##                 CPIAPPSL     CPITRNSL      CPIMEDSL   CUSR0000SAC   CUSR0000SAD
+## 1960-01-01  0.000000e+00 -0.003327790  4.576667e-03  0.000000e+00  0.000000e+00
+## 1960-02-01  4.405293e-03  0.003327790 -2.085049e-05 -2.989539e-03  0.000000e+00
+## 1960-03-01 -4.405293e-03 -0.003338901 -2.066137e-05  5.979078e-03 -2.600782e-03
+## 1960-04-01  2.195391e-03  0.003338901 -2.047481e-05 -8.910710e-06 -6.781707e-06
+## 1960-05-01 -4.809184e-06 -0.003350087 -4.514680e-03 -2.980628e-03 -6.817167e-06
+## 1960-06-01 -2.190581e-03  0.003350087  0.000000e+00  0.000000e+00 -6.852906e-06
+##              CUSR0000SAS      CPIULFSL CUSR0000SA0L2 CUSR0000SA0L5
+## 1960-01-01 -4.228336e-03 -1.149102e-05 -0.0032206147  -0.006677803
+## 1960-02-01  4.210533e-03 -3.384098e-03  0.0000000000   0.006677803
+## 1960-03-01 -1.765428e-05  0.000000e+00  0.0000000000  -0.003338901
+## 1960-04-01 -4.192878e-03  0.000000e+00  0.0032102756   0.003327790
+## 1960-05-01  4.175371e-03  0.000000e+00 -0.0000102729  -0.003327790
+## 1960-06-01 -4.175371e-03  0.000000e+00 -0.0032000027   0.000000000
+##                    PCEPI DDURRG3M086SBEA DNDGRG3M086SBEA DSERRG3M086SBEA
+## 1960-01-01 -0.0017162010    -0.002590791   -0.0017858424   -0.0012884544
+## 1960-02-01  0.0015930285     0.003764618    0.0016743847    0.0008546254
+## 1960-03-01 -0.0004905599    -0.004555114    0.0017856120   -0.0011131338
+## 1960-04-01  0.0031142981     0.004119112    0.0044385992    0.0014503401
+## 1960-05-01 -0.0026291969    -0.001297824   -0.0067233778    0.0005913282
+## 1960-06-01 -0.0006097521    -0.002633301    0.0002215821   -0.0006857802
+##            CES0600000008 CES2000000008 CES3000000008  DTCOLNVHFNM      DTCTHFNM
+## 1960-01-01 -4.680357e-03   0.007797281  -0.009705308  0.004292359 -0.0117388627
+## 1960-02-01 -4.555446e-03   0.003853336  -0.004750183  0.008268451  0.0053876649
+## 1960-03-01 -2.010919e-05   0.030131341  -0.004683849  0.003472085  0.0009509019
+## 1960-04-01 -8.948561e-03  -0.068074290   0.000000000  0.008678176  0.0054517254
+## 1960-05-01  8.948561e-03   0.041619668   0.000000000 -0.004827284 -0.0020671163
+## 1960-06-01 -4.474280e-03  -0.011428696   0.000000000  0.005126225  0.0074195368
+##                  INVEST
+## 1960-01-01 -0.013330266
+## 1960-02-01 -0.018942294
+## 1960-03-01  0.003489993
+## 1960-04-01  0.024135978
+## 1960-05-01  0.003798098
+## 1960-06-01 -0.009980606</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run rpca</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">rpca</span>(X_bal, <span class="at">kmax =</span> <span class="dv">8</span>, <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">tau =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div id="estimates-for-f-lambda-c" class="section level2">
+<h2>Estimates for F, Lambda, C</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out<span class="sc">$</span>Fhat)</span></code></pre></div>
+<pre><code>##             [,1]       [,2]       [,3]        [,4]       [,5]       [,6]
+## [1,] -2.72777529 -0.7563017 -0.7163447  1.50306678  1.7010119 -0.5387042
+## [2,] -0.01287155 -0.9875813 -0.5459054  1.17164798  0.9822878 -2.5272696
+## [3,]  0.53531975 -1.0263390 -0.5535163  0.08587564  0.6896633 -2.7242629
+## [4,]  0.24210594 -1.0057225 -0.6843215  0.45868380  0.5460398 -1.3246484
+## [5,]  0.13376928 -0.9955619 -0.5871676  0.79919784  0.7898499 -0.8963061
+## [6,]  0.24215058 -1.0017377 -0.3673413 -0.10199835 -0.1554649 -3.0287315
+##            [,7]       [,8]
+## [1,]  1.3872600 -3.0136450
+## [2,] -0.1438772  0.6697589
+## [3,]  0.1060784  1.1607713
+## [4,] -0.4215928  1.2171043
+## [5,] -0.8767669  1.2072046
+## [6,]  0.3136323  0.9197441</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out<span class="sc">$</span>Lamhat)</span></code></pre></div>
+<pre><code>##                         [,1]         [,2]          [,3]         [,4]
+## RPI             -0.001427818 -0.002582682 -0.0002980095 0.0006666524
+## W875RX1         -0.001407267 -0.002657137 -0.0001108552 0.0006975078
+## DPCERA3M086SBEA -0.000718345 -0.002721637  0.0001354058 0.0007319163
+## CMRMTSPLx       -0.001521905 -0.002364919  0.0006401258 0.0015659284
+## RETAILx         -0.001795583 -0.004626264 -0.0005936526 0.0011162569
+## INDPRO          -0.001507528 -0.002363297  0.0006380451 0.0021308137
+##                          [,5]          [,6]          [,7]          [,8]
+## RPI              1.444924e-04 -6.401757e-05 -1.170054e-04 -0.0006506590
+## W875RX1          3.385133e-04  3.109728e-04  1.516629e-04 -0.0009346873
+## DPCERA3M086SBEA -1.693918e-04 -2.751978e-05  7.879715e-05 -0.0006643663
+## CMRMTSPLx       -5.482052e-05  1.838148e-03 -3.087248e-04 -0.0037047438
+## RETAILx         -8.667569e-04  1.259658e-03 -2.351850e-04 -0.0018600974
+## INDPRO           7.852026e-04  2.623217e-03  6.041511e-04 -0.0049260826</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out<span class="sc">$</span>Chat)</span></code></pre></div>
+<pre><code>##              RPI      W875RX1 DPCERA3M086SBEA    CMRMTSPLx       RETAILx
+## [1,] 0.009142362 0.0104116209     0.006859148  0.017488185  0.0136263306
+## [2,] 0.003397526 0.0024187717     0.002927569 -0.003295803  0.0009769834
+## [3,] 0.001614945 0.0004124631     0.001592012 -0.007985857 -0.0020021450
+## [4,] 0.002182604 0.0012987911     0.001908489 -0.004553533  0.0008296071
+## [5,] 0.002576605 0.0018069486     0.002138665 -0.002866083  0.0017532594
+## [6,] 0.001819189 0.0004839740     0.001951375 -0.007457344 -0.0011612713
+##            INDPRO      IPFPNSS      IPFINAL      IPCONGD    IPDCONGD
+## [1,]  0.024251337  0.022946280  0.024261678  0.022577975  0.05408833
+## [2,] -0.004742889 -0.004018183 -0.004370058 -0.004986828 -0.01769953
+## [3,] -0.010810423 -0.009855509 -0.010393454 -0.010503042 -0.03021440
+## [4,] -0.006743769 -0.005973977 -0.006416227 -0.007188141 -0.02179189
+## [5,] -0.004728052 -0.004057511 -0.004448809 -0.005555999 -0.01806305
+## [6,] -0.010857710 -0.009862655 -0.010448791 -0.010130690 -0.02840316
+##           IPNCONGD      IPBUSEQ        IPMAT      IPDMAT       IPNMAT
+## [1,]  0.0112412487  0.031840094  0.026150288  0.03931141  0.021861899
+## [2,] -0.0005387495 -0.004646316 -0.005794250 -0.01090166 -0.003599875
+## [3,] -0.0033812266 -0.012722725 -0.012222861 -0.02062332 -0.009619469
+## [4,] -0.0019787544 -0.006625254 -0.007855145 -0.01369309 -0.005808799
+## [5,] -0.0011657025 -0.003718498 -0.005695896 -0.01050572 -0.003851000
+## [6,] -0.0035465732 -0.013305456 -0.012296944 -0.01996719 -0.009698532
+##         IPMANSICS    IPB51222S       IPFUELS     CUMFNS           HWI
+## [1,]  0.028215621 -0.009498124  0.0070420105  1.8806024  4.259999e+02
+## [2,] -0.006207442  0.007724295 -0.0004700292 -0.8808731  2.408932e-06
+## [3,] -0.013351490  0.007871846 -0.0005524397 -1.3897465 -8.600006e+01
+## [4,] -0.008495108  0.007626109 -0.0006295308 -0.9840949 -4.000000e+01
+## [5,] -0.006168136  0.008671915 -0.0012709504 -0.7983824 -2.300009e+01
+## [6,] -0.013106168  0.004474432  0.0004665615 -1.3405521 -4.000007e+01
+##         HWIURATIO     CLF16OV        CE16OV      UNRATE     UEMPMEAN
+## [1,]  0.087286121 0.001778696  0.0044860785 -0.25885540  0.462804744
+## [2,] -0.004074846 0.001365616  0.0003249503  0.09965064 -0.402091020
+## [3,] -0.024411056 0.001001577 -0.0008554941  0.17763133 -0.152317728
+## [4,] -0.013520876 0.001347893  0.0002373727  0.10513803 -0.398280778
+## [5,] -0.008212161 0.001431733  0.0006796158  0.07084186 -0.678715487
+## [6,] -0.019497156 0.001049551 -0.0009180756  0.18819731  0.009477136
+##          UEMPLT5   UEMP5TO14      UEMP15OV   UEMP15T26     UEMP27OV     CLAIMSx
+## [1,] -0.02459683 -0.05018558 -0.0424480751 -0.08057730 -0.008252669 -0.06787696
+## [2,]  0.01959786  0.02193171  0.0005934385  0.01610664 -0.013595784  0.02943955
+## [3,]  0.01977567  0.03442895  0.0253663988  0.03802964  0.013875298  0.04715523
+## [4,]  0.01933424  0.02483175  0.0045747590  0.02330388 -0.012331055  0.03424689
+## [5,]  0.02291933  0.02053411 -0.0113701740  0.01507421 -0.035046102  0.02821990
+## [6,]  0.01941532  0.03511267  0.0314701698  0.03549613  0.027626058  0.04357375
+##             PAYEMS       USGOOD CES1021000001        USCONS       MANEMP
+## [1,]  0.0063449495  0.011079022  0.0036228224  0.0117249511  0.011036435
+## [2,]  0.0011737696 -0.001462590 -0.0022778098 -0.0008713588 -0.001666981
+## [3,] -0.0004164149 -0.004942710 -0.0032028989 -0.0048883732 -0.005088800
+## [4,]  0.0005512482 -0.002484718 -0.0010416552 -0.0017881490 -0.002826760
+## [5,]  0.0010918887 -0.001051162 -0.0002135926 -0.0002203104 -0.001416924
+## [6,] -0.0005930494 -0.005535254 -0.0044630184 -0.0046620043 -0.005892008
+##           DMANEMP      NDMANEMP      SRVPRD         USTPU      USWTRADE
+## [1,]  0.014226148  0.0061882168 0.004640711  4.852453e-03  4.523307e-03
+## [2,] -0.002401813 -0.0005731574 0.002408533  1.251853e-03  1.434377e-03
+## [3,] -0.006788159 -0.0025054212 0.001468230 -1.600999e-06  2.121679e-05
+## [4,] -0.003727475 -0.0014895342 0.001855150  8.437414e-04  1.078897e-03
+## [5,] -0.001911733 -0.0007177291 0.002083824  1.268411e-03  1.652288e-03
+## [6,] -0.007772082 -0.0030101496 0.001381922 -1.452086e-04 -4.080254e-04
+##           USTRADE      USFIRE      USGOVT CES0600000007     AWOTMAN   AWHMAN
+## [1,] 0.0050751071 0.003192497 0.002653738      40.07733  0.12986906 40.58535
+## [2,] 0.0014836663 0.002568119 0.003761984      39.78569 -0.08315046 40.18202
+## [3,] 0.0002051503 0.001764958 0.003270985      39.53706 -0.12561643 39.90915
+## [4,] 0.0009373931 0.002190359 0.002778058      39.64771 -0.08313979 40.07145
+## [5,] 0.0012572244 0.002369128 0.002685275      39.58352 -0.06307495 40.03794
+## [6,] 0.0002874669 0.001807305 0.003080207      39.47715 -0.12719264 39.82632
+##         HOUST  HOUSTNE  HOUSTMW   HOUSTS   HOUSTW   PERMIT PERMITNE PERMITMW
+## [1,] 7.256858 5.382609 5.771629 6.349303 5.774961 7.105313 5.371508 5.662105
+## [2,] 7.265810 5.414951 5.845302 6.279581 5.810812 7.098421 5.391154 5.718352
+## [3,] 7.026288 5.135604 5.560884 6.089931 5.561652 6.885784 5.104013 5.447250
+## [4,] 7.168594 5.197227 5.659036 6.264466 5.732912 7.054320 5.191362 5.560490
+## [5,] 7.175021 5.194992 5.665882 6.278690 5.755674 7.069132 5.207611 5.580884
+## [6,] 7.142282 5.223715 5.652954 6.207151 5.696159 7.007066 5.177087 5.534111
+##       PERMITS  PERMITW      AMDMNOx       AMDMUOx     BUSINVx    ISRATIOx
+## [1,] 6.027733 5.725420  0.037894052  0.0145547262 0.005621810 -0.02301217
+## [2,] 5.928100 5.782839 -0.010616935  0.0033965771 0.004881093  0.01334644
+## [3,] 5.800439 5.551007 -0.021628162 -0.0005950695 0.004033084  0.01986778
+## [4,] 6.025040 5.728677 -0.013353746  0.0039522511 0.005343373  0.01336371
+## [5,] 6.047846 5.749876 -0.009198432  0.0058281213 0.005842332  0.01112841
+## [6,] 5.936964 5.690938 -0.021248187 -0.0022837278 0.003061973  0.01797587
+##               M1SL          M2SL      M2REAL      BOGMBASE      TOTRESNS
+## [1,] -4.422151e-03  1.292296e-04 0.004528936 -0.0004973225 -0.0011739866
+## [2,]  2.231463e-04  4.831722e-04 0.003453610 -0.0017444305 -0.0016293752
+## [3,]  1.536226e-03  8.470272e-04 0.002867065 -0.0009203318  0.0013411145
+## [4,]  5.060604e-04  2.240869e-04 0.001959611 -0.0011331671 -0.0004119476
+## [5,] -3.131818e-05 -9.835951e-05 0.001870240 -0.0013817330 -0.0022231975
+## [6,]  1.616374e-03  1.277715e-03 0.003616700 -0.0006971917  0.0048962142
+##          NONBORRES      BUSLOANS        REALLN      NONREVSL        CONSPI
+## [1,]  0.0035667962 -0.0004202196 -0.0004973950  5.545367e-05 -2.366169e-04
+## [2,]  0.0003960889 -0.0012618024 -0.0002820444 -3.259488e-04  1.177812e-04
+## [3,]  0.0022194726 -0.0017073042 -0.0003095715 -6.385894e-04  3.425118e-05
+## [4,] -0.0007684624 -0.0007020835 -0.0002826592 -3.263422e-04  1.062462e-04
+## [5,] -0.0030857410 -0.0001977003 -0.0002275202 -1.386300e-04  1.864238e-04
+## [6,]  0.0062523556 -0.0019798991 -0.0002784015 -6.323425e-04 -1.171336e-05
+##          S&amp;P 500 S&amp;P: indust S&amp;P div yield S&amp;P PE ratio     FEDFUNDS
+## [1,] 0.019847818 0.018894194  -0.029917233  0.008511741  0.103571232
+## [2,] 0.015216274 0.013895611  -0.038705908  0.008509365 -0.325831974
+## [3,] 0.015170381 0.014022853  -0.046408742  0.011884311 -0.493990407
+## [4,] 0.007147812 0.006943706  -0.006776142 -0.000950382 -0.144823443
+## [5,] 0.004226749 0.004246177   0.009092940 -0.007071281  0.002098046
+## [6,] 0.019613459 0.018079198  -0.069532452  0.020088140 -0.618018761
+##            CP3Mx       TB3MS       TB6MS         GS1         GS5        GS10
+## [1,] -0.00983947 -0.02417126 -0.05680493 -0.10063099 -0.16207915 -0.16028717
+## [2,] -0.32594344 -0.24367168 -0.28383700 -0.32249380 -0.23253569 -0.17220407
+## [3,] -0.49387714 -0.39026648 -0.43619149 -0.48310812 -0.33413351 -0.24278121
+## [4,] -0.10151413 -0.06354444 -0.07572048 -0.08111904 -0.03576788 -0.01299796
+## [5,]  0.06780289  0.08220969  0.08243627  0.09287921  0.09026001  0.08274872
+## [6,] -0.67135491 -0.55412501 -0.61237795 -0.67598136 -0.48487638 -0.36356628
+##                AAA         BAA COMPAPFFx   TB3SMFFM    TB6SMFFM     T1YFFM
+## [1,] -0.0871106929 -0.11147092 0.7507349  0.6248586  0.81601311 0.95391542
+## [2,] -0.1062567744 -0.07012435 0.7448223  0.1404067  0.34151703 0.61278272
+## [3,] -0.1525910604 -0.09974718 0.5274269 -0.2508044 -0.12104396 0.11433024
+## [4,]  0.0001223743  0.02722427 0.3601937 -0.3891479 -0.23253771 0.08571709
+## [5,]  0.0631055886  0.07907162 0.4125603 -0.2321107 -0.04818208 0.28273182
+## [6,] -0.2428125273 -0.18558810 0.3998667 -0.4051008 -0.28407336 0.01233938
+##         T5YFFM   T10YFFM    AAAFFM   BAAFFM      EXSZUSx       EXJPUSx
+## [1,] 0.8437942 0.7490015 0.8362049 1.124591 -0.001839213 -0.0026558308
+## [2,] 0.6718422 0.4825574 0.6998361 1.282947 -0.003760660  0.0004389545
+## [3,] 0.2535939 0.1992188 0.7555802 1.558225 -0.005672536 -0.0001956886
+## [4,] 0.1759802 0.1144483 0.6293538 1.388947 -0.001410134  0.0024407164
+## [5,] 0.3877000 0.3305195 0.7809850 1.444139  0.001379629  0.0041725031
+## [6,] 0.4491503 0.4919527 1.2109400 2.186409 -0.010250758 -0.0047653817
+##            EXUSUKx       EXCAUSx    WPSFD49207    WPSFD49502       WPSID61
+## [1,]  9.957686e-04  0.0003562913 -2.975458e-04 -2.516580e-04  6.883430e-04
+## [2,]  1.403210e-03 -0.0003587452  5.575300e-05  2.807076e-04 -1.039983e-04
+## [3,]  1.971293e-03 -0.0006455724 -1.225219e-04  8.819529e-05 -7.270324e-04
+## [4,]  5.020905e-05  0.0001664501  1.977363e-04  3.643360e-04 -9.545895e-05
+## [5,] -1.227643e-03  0.0008722648  3.052600e-04  4.425594e-04  2.047037e-04
+## [6,]  3.972022e-03 -0.0017391171  4.611007e-05  3.043393e-04 -5.528223e-04
+##            WPSID62     OILPRICEx        PPICMM      CPIAUCSL      CPIAPPSL
+## [1,] -0.0003303257 -0.0142930895  5.736041e-03  1.482826e-05  2.275256e-05
+## [2,] -0.0005159987 -0.0004761071  6.913279e-05 -2.007115e-04 -4.108659e-04
+## [3,] -0.0016708780 -0.0028478729 -2.300791e-03 -3.273201e-04 -5.389728e-04
+## [4,] -0.0005188740  0.0028649246  1.507688e-04 -4.666151e-05 -2.707090e-04
+## [5,]  0.0001194277  0.0061886106  1.147024e-03  4.203210e-05 -1.366093e-04
+## [6,] -0.0008235278 -0.0056648600 -1.422005e-03 -3.112343e-04 -7.301146e-04
+##           CPITRNSL      CPIMEDSL   CUSR0000SAC   CUSR0000SAD   CUSR0000SAS
+## [1,]  3.823179e-04  0.0007411708  5.773246e-05 -1.434308e-04  0.0003610020
+## [2,]  2.199903e-05 -0.0001307955 -2.042074e-04 -4.682423e-04 -0.0002100237
+## [3,] -3.572132e-04 -0.0002133619 -4.114008e-04 -6.177816e-04 -0.0003235790
+## [4,]  1.600399e-04 -0.0001784034 -3.000557e-05 -1.843848e-04 -0.0001610189
+## [5,]  3.095461e-04 -0.0002023910  9.956031e-05  4.604256e-07 -0.0001111304
+## [6,] -3.995813e-05 -0.0001539711 -3.488692e-04 -7.512797e-04 -0.0003379065
+##           CPIULFSL CUSR0000SA0L2 CUSR0000SA0L5         PCEPI DDURRG3M086SBEA
+## [1,] -1.175963e-06  1.688450e-04  8.556937e-05  2.050169e-04    0.0002144103
+## [2,] -3.234538e-04 -1.846004e-04 -2.927038e-04 -9.557506e-05   -0.0002535367
+## [3,] -4.408897e-04 -3.660518e-04 -4.509058e-04 -1.991126e-04   -0.0002597703
+## [4,] -1.165927e-04 -2.739412e-05 -1.309282e-04 -3.496625e-05   -0.0001947282
+## [5,] -2.494324e-05  9.254234e-05 -2.426710e-05  1.475288e-05   -0.0002018418
+## [6,] -3.941043e-04 -3.452526e-04 -4.373004e-04 -1.827078e-04   -0.0002560587
+##      DNDGRG3M086SBEA DSERRG3M086SBEA CES0600000008 CES2000000008 CES3000000008
+## [1,]    4.938600e-04    1.096868e-04  5.111328e-04  -0.003163610  0.0013408538
+## [2,]   -2.019725e-04    3.767069e-05  1.249836e-05   0.002435806 -0.0008363976
+## [3,]   -3.994198e-04   -5.225213e-05  5.255366e-05   0.003092599 -0.0011469232
+## [4,]   -8.148736e-05    5.390352e-05 -1.698261e-04   0.002277116 -0.0008974732
+## [5,]   -4.069734e-05    1.136189e-04 -2.956863e-04   0.002041214 -0.0007979064
+## [6,]   -1.789937e-04   -1.028107e-04  1.958879e-04   0.003038848 -0.0011211388
+##        DTCOLNVHFNM      DTCTHFNM        INVEST
+## [1,] -0.0035694404 -0.0023778644 -0.0019328056
+## [2,]  0.0000933341 -0.0011132971  0.0002527169
+## [3,] -0.0001915577 -0.0016266542  0.0010079669
+## [4,]  0.0013098438 -0.0001589199  0.0006826496
+## [5,]  0.0021157915  0.0006254107  0.0004717469
+## [6,] -0.0018643375 -0.0021966398  0.0008155838</code></pre>
+</div>
+<div id="standard-error-of-chat" class="section level2">
+<h2>Standard Error of C^hat</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>xpt <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>), <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">se.rpca</span>(<span class="at">object =</span> out, <span class="at">xpoints =</span> xpt, <span class="at">qq =</span> <span class="dv">50</span>)</span></code></pre></div>
+<pre><code>##                                         
+## 0.1727215 0.1153868 0.1739940 0.1156457</code></pre>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
