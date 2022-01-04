@@ -41,6 +41,14 @@ devtools::install_github("cykbennie/fbi")
 
 Refer to the [fbi.pdf](fbi.pdf) file for details.
 
+## Vignette
+
+After installing the package, use the code:
+``` r
+vignette("factor_fred", package = "fbi")
+```
+to see an example using the FRED-MD dataset (\url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}).
+
 ## Author
 
 * Yankang (Bennie) Chen (<yankang.chen@yale.edu>)
