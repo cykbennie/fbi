@@ -7,8 +7,8 @@
 describe_md(varname, name.only = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{varname}{string or a vector strings of the format \code{"X1"} to
-\code{"X135"}.}
+\item{varname}{string or a vector strings of the FRED variable name,
+such as \code{GDPC1}.}
 
 \item{name.only}{logical. If \code{TRUE}, return a dataframe with variable
 names and types of transformation only;
@@ -25,7 +25,7 @@ in the FRED-MD data set.
 }
 \examples{
 library(fbi)
-varnames <- describe_md(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
+varnames <- describe_md(c("RPI", "RETAILx"), name.only = TRUE, verbose = FALSE)
 }
 \references{
 Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD Updated Appendix}.

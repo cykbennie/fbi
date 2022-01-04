@@ -6,8 +6,8 @@
 #'
 #' @export
 #'
-#' @param varname string or a vector strings of the format \code{"X1"} to
-#' \code{"X135"}.
+#' @param varname string or a vector strings of the FRED variable name,
+#' such as \code{GDPC1}.
 #' @param name.only logical. If \code{TRUE}, return a dataframe with variable
 #' names and types of transformation only;
 #' if \code{FALSE}, return a dataframe with more details.
@@ -23,35 +23,23 @@
 #'
 #' @examples
 #' library(fbi)
-#' varnames <- describe_md(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
+#' varnames <- describe_md(c("RPI", "RETAILx"), name.only = TRUE, verbose = FALSE)
 
 
 
 describe_md <- function(varname, name.only = TRUE, verbose = FALSE) {
-  # Error checking
-  for (name in varname) {
-    if (substr(name, 1, 1) != "X")
-      stop("varname must be a string or a vector strings
-           of the format 'X1' to 'X135'")
-
-    tempnum <- as.integer(substr(name, 2, 4))
-    if ((tempnum < 1) | (tempnum > 135))
-      stop("varname must be a string or a vector strings
-           of the format 'X1' to 'X135'")
-  }
-
   fredmd_description <- fredmd_description
 
   index <- c()
   for (name in varname) {
-    temp <- which.max(fredmd_description$varname == name)
+    temp <- which.max(fredmd_description$fred == name)
     index <- c(index, temp)
   }
 
-  data <- fredmd_description[index, -ncol(fredmd_description)]
+  data <- fredmd_description[index,]
 
   if (name.only) {
-    outdata <- data[, c("description", "ttype")]
+    outdata <- data[, c("fred", "description", "ttype")]
   } else {
     outdata <- data
   }

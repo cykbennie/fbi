@@ -55,14 +55,16 @@ fredqd <- function(file = "", date_start = NULL, date_end = NULL, transform = TR
   # Prepare raw data
   rawdata <- readr::read_csv(file, col_names = FALSE, col_types = cols(X1 = col_date(format = "%m/%d/%Y")),
                              skip = 3)
-  rawdata <- rawdata[1:(nrow(rawdata) - 2), ] # remove NA rows
+  rawdata <- rawdata[1:(nrow(rawdata) - 1), ] # remove NA rows
   rawdata <- as.data.frame(rawdata)
-  header <- c("date", colnames(rawdata))[1:ncol(rawdata)]
+
+  attrdata <- read.csv(file, header = FALSE, nrows = 3)
+  header <- c("date", unlist(attrdata[1,2:ncol(attrdata)]))
   colnames(rawdata) <- header
 
 
   # Import tcode tcodes is an internal data of the R package
-  tcode <- tcodes_qd
+  tcode <- unlist(attrdata[3,2:ncol(attrdata)])
 
 
   # Subfunction transxf: data transformation based on tcodes

@@ -7,8 +7,8 @@
 describe_qd(varname, name.only = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{varname}{string or a vector strings of the format \code{"X1"} to
-\code{"X135"}.}
+\item{varname}{string or a vector strings of the FRED variable name,
+such as \code{GDPC1}.}
 
 \item{name.only}{logical. If \code{TRUE}, return a dataframe with variable
 names and types of transformation only;
@@ -25,7 +25,7 @@ in the FRED-QD data set.
 }
 \examples{
 library(fbi)
-varnames <- describe_qd(c("X32", "X56"), name.only = TRUE, verbose = FALSE)
+varnames <- describe_qd(c("GDPC1", "Y033RC1Q027SBEAx"), name.only = TRUE, verbose = FALSE)
 }
 \references{
 Michael W. McCracken and Serena Ng (2020), \emph{FRED-QD Updated Appendix}.
