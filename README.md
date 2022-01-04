@@ -47,7 +47,7 @@ After installing the package, use the code:
 ``` r
 vignette("factor_fred", package = "fbi")
 ```
-to see an example using the FRED-MD dataset (\url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}).
+to see an example using the FRED-MD dataset (https://research.stlouisfed.org/econ/mccracken/fred-databases/).
 
 ## Author
 
