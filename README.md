@@ -3,9 +3,9 @@
 
 The codes in the `fbi` package are developed based on the following papers:
 
-* [Bai, Jushan and Ng, Serena (2019), "Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data"](https://arxiv.org/abs/1910.06677).
+* [Bai, Jushan and Ng, Serena (2021), "Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data"](https://doi.org/10.1080/01621459.2021.1967163).
 
-* Cahan, E., Bai, J. and Ng, S. (2019), "Factor Based Imputation of Missing Data and Covariance Matrix Estimation". unpublished manucript, Columbia University.
+* [Cahan, E., Bai, J. and Ng, S. (2021), "Factor-Based Imputation of Missing Values and Covariances in Panel Data of Large Dimensions"](https://arxiv.org/abs/2103.03045).
 
 * [Bai, Jushan and Ng, Serena (2002), "Determining the number of factors in approximate factor models"](https://onlinelibrary.wiley.com/doi/pdf/10.1111/1468-0262.00273).
 
