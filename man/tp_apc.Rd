@@ -36,8 +36,9 @@ a list of elements:
 method of "Tall-Project".
 }
 \references{
-Cahan, E., Bai, J. and Ng, S. 2019, Factor Based Imputation of Missing Data
-and Covariance Matrix Estimation. unpublished manuscript, Columbia University
+Ercument Cahan, Jushan Bai, and Serena Ng (2021),
+\emph{Factor-Based Imputation of Missing Values and Covariances in Panel Data of Large Dimensions}.
+\url{https://arxiv.org/abs/2103.03045}
 }
 \author{
 Yankang (Bennie) Chen <yankang.chen@yale.edu>

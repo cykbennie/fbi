@@ -20,7 +20,13 @@
 #' Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.
 #' \url{https://onlinelibrary.wiley.com/doi/pdf/10.1111/1468-0262.00273}
 #'
-#' Jushan Bai and Serena Ng (2017), \emph{Rank regularized estimation of approximate factor models}.
-#' \url{https://www.sciencedirect.com/science/article/pii/S0304407619300764}
+#' Jushan Bai and Serena Ng (2019), \emph{Rank regularized estimation of approximate factor models}.
+#' \url{https://doi.org/10.1016/j.jeconom.2019.04.021}
 #'
+#' Jushan Bai and Serena Ng (2021), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
+#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2021.1967163}
+#'
+#' Ercument Cahan, Jushan Bai, and Serena Ng (2021),
+#' \emph{Factor-Based Imputation of Missing Values and Covariances in Panel Data of Large Dimensions}.
+#' \url{https://arxiv.org/abs/2103.03045}
 NULL

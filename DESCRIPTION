@@ -1,8 +1,8 @@
 Package: fbi
 Type: Package
-Title: Factor-Based Imputation and FRED-MD Data Set
+Title: Factor-Based Imputation and FRED-MD/QD Data Set
 Version: 0.4.0
-Date: 2021-02-03
+Date: 2022-01-04
 Authors@R: c(person("Yankang (Bennie)", "Chen", email = "yankang.chen@yale.edu", role = c("aut", "cre")),
     person("Serena", "Ng", email = "serena.ng@columbia.edu", role = "aut"),
     person("Jushan", "Bai", email = "jushan.bai@columbia.edu", role = "aut"))
@@ -11,14 +11,14 @@ Author: Yankang (Bennie) Chen [aut, cre],
     Jushan Bai [aut]
 Maintainer: Yankang (Bennie) Chen <yankang.chen@yale.edu>
 Description: Factor-Based imputation of missing values in panel data and and
-    manipulation of the FRED-MD Data Set. It estimates the factor model in the
+    manipulation of the FRED-MD/QD Data Set. It estimates the factor model in the
     panel data based on the methods in Bai and Ng (2002)
     <doi:10.1111/1468-0262.00273> and Bai and Ng (2019)
     <doi:10.1016/j.jeconom.2019.04.021>. It then computes the missing
-    values using the Tall-Wide method (Bai and Ng (2019)
-    <arXiv:1910.06677>) or the Tall-Project method (Bai, Cahan, and Ng
-    (2019), unpublished manuscript). It also facilitates loading, preparing, and
-    interpreting the FRED-MD data set <https://research.stlouisfed.org/econ/mccracken/fred-databases>.
+    values using the Tall-Wide method (Bai and Ng (2021)
+    <doi:10.1080/01621459.2021.1967163>) or the Tall-Project method (Cahan, Bai, and Ng
+    (2021)<arXiv:2103.03045>). It also facilitates loading, preparing, and
+    interpreting the FRED-MD/QD data set <https://research.stlouisfed.org/econ/mccracken/fred-databases>.
 URL: https://github.com/cykbennie/fbi
 Depends: R (>= 3.5.0)
 Imports: stats, readr, pracma

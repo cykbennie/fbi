@@ -36,8 +36,8 @@ a list of elements:
 method of "Tall-Wide".
 }
 \references{
-Jushan Bai and Serena Ng (2019), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
-\url{https://arxiv.org/abs/1910.06677}
+Jushan Bai and Serena Ng (2021), \emph{Matrix Completion, Counterfactuals, and Factor Analysis of Missing Data}.
+\url{https://www.tandfonline.com/doi/full/10.1080/01621459.2021.1967163}
 }
 \author{
 Yankang (Bennie) Chen <yankang.chen@yale.edu>
