@@ -45,10 +45,6 @@
 
 
 se0 <- function(object, npoints, tpoints, qq){
-  # Error checking
-  if (!(inherits(object, "tw") | inherits(object, "tp")))
-    stop("Object must be of class 'tw' or 'tp', i.e. the output of tw_apc or
-         tp_apc.")
 
   Fhat <- object$Fhat
   Lhat <- object$Lamhat
