@@ -16,23 +16,25 @@ tp_apc(X, kmax, center = FALSE, standardize = FALSE, re_estimate = TRUE)
 \item{standardize}{logical, indicating whether or not X should be scaled.}
 
 \item{re_estimate}{logical, indicating whether or not output factors,
-`Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.}
+`Fhat`, `Lamhat`, `Dhat`, and `Chat`, should be re-estimated from the imputed data.}
 }
 \value{
 a list of elements:
 \item{Fhat}{estimated F}
 \item{Lamhat}{estimated Lambda}
+\item{Dhat}{estimated D}
 \item{Chat}{euqals Fhat x Lamhat'}
+\item{ehat}{equals Xhat - Chat}
 \item{data}{X with missing data imputed}
 \item{X}{the original data with missing values}
 \item{kmax}{the maximum number of factors}
 \item{center}{logical, indicating whether or not X was demeaned in the algorithm}
 \item{standardize}{logical, indicating whether or not X was scaled in the algorithm}
 \item{re_estimate}{logical, indicating whether or not output factors,
-`Fhat`, `Lamhat`, and `Chat`, were re-estimated from the imputed data}
+`Fhat`, `Lamhat`, `Dhat`, and `Chat`, were re-estimated from the imputed data}
 }
 \description{
-\code{tp_apc} imputates the missing values in a given panel data using the
+\code{tp_apc} imputes the missing values in a given panel data using the
 method of "Tall-Project".
 }
 \references{

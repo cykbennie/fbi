@@ -13,16 +13,18 @@ apc(X, kmax)
 }
 \value{
 a list of elements:
-\item{Fhat}{}
-\item{Lamhat}{}
-\item{Chat}{}
-\item{d}{}
-\item{d0}{}
-\item{ehat}{}
-\item{Chat}{euqals Fhat x Lamhat'}
+\item{X}{the original data}
+\item{kmax}{the maximum number of factors}
+\item{Fhat}{estimated F}
+\item{Lamhat}{estimated Lambda}
+\item{Chat}{equals Fhat x Lamhat'}
+\item{Dhat}{estimated diagonal matrix D, of dim kmax by kmax}
+\item{d}{first kmax elements of Dhat}
+\item{d0}{diagonal elements of Dhat}
+\item{ehat}{equals X - Chat}
 }
 \description{
-\code{apc} estiamtes the factor model of a given balanced panel data.
+\code{apc} estimates the factor model of a given balanced panel data.
 }
 \references{
 Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.

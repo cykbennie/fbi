@@ -8,8 +8,8 @@
 #' @import pracma
 #' @export
 #'
-#' @param object an object of class `tptw`, i.e. the output of
-#' \code{\link{tp_apc}} or \code{\link{tw_apc}}.
+#' @param object an object of class `tw` or `tp`, i.e. the output of
+#' \code{\link{tw_apc}} or \code{\link{tp_apc}}.
 #' @param method integer 1 to 4, indicating which residual overlay
 #' method to use. They correspond to the four methods described in the paper.
 #' @param S the number of iterations.
@@ -32,9 +32,9 @@
 
 res_overlay.twtp <- function(object, method = 1, S = 500) {
   # Error checking
-  if (!inherits(object, "tptw"))
-    stop("Object must be of class 'tptw', i.e. the output of tp_apc or
-         tw_apc.")
+  if (!(inherits(object, "tw") | inherits(object, "tp")))
+    stop("Object must be of class 'tw' or 'tp', i.e. the output of tw_apc or
+         tp_apc.")
   if (!method %in% c(1,2,3,4))
     stop("'method' must be of integer 1, 2, 3, or 4.")
   if (! is.numeric(S))

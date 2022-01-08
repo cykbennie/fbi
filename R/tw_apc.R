@@ -1,7 +1,7 @@
 #' @title Tall-Wide Imputation of Missing Value in Panel Data
 #'
 #' @description
-#' \code{tw_apc} imputates the missing values in a given panel data using the
+#' \code{tw_apc} imputes the missing values in a given panel data using the
 #' method of "Tall-Wide".
 #'
 #' @import stats
@@ -13,19 +13,21 @@
 #' @param center logical, indicating whether or not X should be demeaned
 #' @param standardize logical, indicating whether or not X should be scaled.
 #' @param re_estimate logical, indicating whether or not output factors,
-#' `Fhat`, `Lamhat`, and `Chat`, should be re-estimated from the imputed data.
+#' `Fhat`, `Lamhat`, `Dhat`, and `Chat`, should be re-estimated from the imputed data.
 #'
 #' @return a list of elements:
 #' \item{Fhat}{estimated F}
 #' \item{Lamhat}{estimated Lambda}
+#' \item{Dhat}{estimated D}
 #' \item{Chat}{euqals Fhat x Lamhat'}
+#' \item{ehat}{equals Xhat - Chat}
 #' \item{data}{X with missing data imputed}
 #' \item{X}{the original data with missing values}
 #' \item{kmax}{the maximum number of factors}
 #' \item{center}{logical, indicating whether or not X was demeaned in the algorithm}
 #' \item{standardize}{logical, indicating whether or not X was scaled in the algorithm}
 #' \item{re_estimate}{logical, indicating whether or not output factors,
-#' `Fhat`, `Lamhat`, and `Chat`, were re-estimated from the imputed data}
+#' `Fhat`, `Lamhat`, `Dhat`, and `Chat`, were re-estimated from the imputed data}
 #'
 #'
 #' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
@@ -93,6 +95,7 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
     HH <- pracma::mldivide(bnXN$Lamhat[1:N1, 1:kmax], bnXT$Lamhat[1:N1, 1:kmax])
     Lamhat <- bnXN$Lamhat %*% HH
     Fhat <- bnXT$Fhat
+    Dhat <- diag(bnXT$d)
     Chat <- bnXT$Fhat %*% t(Lamhat)
     Xhat <- X   # estimated data
     Xhat[missing] <- Chat[missing] * sd1[missing] + mu1[missing]
@@ -102,11 +105,13 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
       out$data <- Xhat
       out$Fhat <- reest$Fhat
       out$Lamhat <- reest$Lamhat
+      out$Dhat <- diag(reest$d)
       out$Chat <- (out$Fhat %*% t(out$Lamhat))*sd1 + mu1
     } else {
       out$data <- Xhat
       out$Fhat <- Fhat
       out$Lamhat <- Lamhat
+      out$Dhat <- Dhat
       out$Chat <- Chat*sd1 + mu1
     }
 
@@ -123,6 +128,7 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
     HH <- pracma::mldivide(bnXN$Lamhat[1:N1, 1:kmax], bnXT$Lamhat[1:N1, 1:kmax])
     Lamhat <- bnXN$Lamhat %*% HH
     Fhat <- bnXT$Fhat
+    Dhat <- diag(bnXT$d)
     Chat <- bnXT$Fhat %*% t(Lamhat)
     Xhat <- X   # estimated data
     Xhat[missing] <- Chat[missing] + mu1[missing]
@@ -132,11 +138,13 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
       out$data <- Xhat
       out$Fhat <- reest$Fhat
       out$Lamhat <- reest$Lamhat
+      out$Dhat <- diag(reest$d)
       out$Chat <- (out$Fhat %*% t(out$Lamhat)) + mu1
     } else {
       out$data <- Xhat
       out$Fhat <- Fhat
       out$Lamhat <- Lamhat
+      out$Dhat <- Dhat
       out$Chat <- Chat + mu1
     }
 
@@ -153,6 +161,7 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
     HH <- pracma::mldivide(bnXN$Lamhat[1:N1, 1:kmax], bnXT$Lamhat[1:N1, 1:kmax])
     Lamhat <- bnXN$Lamhat %*% HH
     Fhat <- bnXT$Fhat
+    Dhat <- diag(bnXT$d)
     Chat <- bnXT$Fhat %*% t(Lamhat)
     Xhat <- X   # estimated data
     Xhat[missing] <- Chat[missing]
@@ -162,17 +171,21 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
       out$data <- Xhat
       out$Fhat <- reest$Fhat
       out$Lamhat <- reest$Lamhat
+      out$Dhat <- diag(reest$d)
       out$Chat <- out$Fhat %*% t(out$Lamhat)
     } else {
       out$data <- Xhat
       out$Fhat <- Fhat
       out$Lamhat <- Lamhat
+      out$Dhat <- Dhat
       out$Chat <- Chat
     }
 
   }
 
-  class(out) <- c("list", "tptw")
+  out$ehat <- out$data - out$Chat
+
+  class(out) <- c("list", "tw")
   return(out)
 
 }

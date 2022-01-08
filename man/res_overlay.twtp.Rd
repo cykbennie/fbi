@@ -7,8 +7,8 @@
 res_overlay.twtp(object, method = 1, S = 500)
 }
 \arguments{
-\item{object}{an object of class `tptw`, i.e. the output of
-\code{\link{tp_apc}} or \code{\link{tw_apc}}.}
+\item{object}{an object of class `tw` or `tp`, i.e. the output of
+\code{\link{tw_apc}} or \code{\link{tp_apc}}.}
 
 \item{method}{integer 1 to 4, indicating which residual overlay
 method to use. They correspond to the four methods described in the paper.}

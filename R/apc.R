@@ -1,7 +1,7 @@
 #' @title Factor Model of Balanced Panel Data
 #'
 #' @description
-#' \code{apc} estiamtes the factor model of a given balanced panel data.
+#' \code{apc} estimates the factor model of a given balanced panel data.
 #'
 #' @export
 #'
@@ -9,13 +9,15 @@
 #' @param kmax integer, indicating the maximum number of factors.
 #'
 #' @return a list of elements:
-#' \item{Fhat}{}
-#' \item{Lamhat}{}
-#' \item{Chat}{}
-#' \item{d}{}
-#' \item{d0}{}
-#' \item{ehat}{}
-#' \item{Chat}{euqals Fhat x Lamhat'}
+#' \item{X}{the original data}
+#' \item{kmax}{the maximum number of factors}
+#' \item{Fhat}{estimated F}
+#' \item{Lamhat}{estimated Lambda}
+#' \item{Chat}{equals Fhat x Lamhat'}
+#' \item{Dhat}{estimated diagonal matrix D, of dim kmax by kmax}
+#' \item{d}{first kmax elements of Dhat}
+#' \item{d0}{diagonal elements of Dhat}
+#' \item{ehat}{equals X - Chat}
 #'
 #' @author Yankang (Bennie) Chen <yankang.chen@@yale.edu>
 #' @author Serena Ng <serena.ng@@columbia.edu>
@@ -38,6 +40,8 @@ apc <- function(X, kmax){
 
   # Create output object
   out <- list()
+  out$X <- X
+  out$kmax <- kmax
 
   T <- nrow(X)
   N <- ncol(X)
@@ -54,8 +58,8 @@ apc <- function(X, kmax){
   out$Chat <- out$Fhat %*% t(out$Lamhat)
   out$d <- d[1:kmax]
   out$d0 <- d
-  out$ehat <- X - out$Chat
-  out$kmax <- kmax
+  out$Dhat <- diag(out$d)
+  out$ehat <- out$X - out$Chat
 
   return(out)
 }
