@@ -101,12 +101,12 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
         B_Lam <- diag(r) %*% (N_tt/N)
       }
 
-      Lhat_ii <- Lhat[ii,]
+      Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
       LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,]
       var.Lehat_t <- B_Lam %*% t(LEhat_t) %*% LEhat_t %*% t(B_Lam) / N_tt
       var.Lhat <- t(Lhat) %*% Lhat / N
 
-      Fhat_tt <- Fhat[tt,]
+      Fhat_tt <- matrix(Fhat[tt,], nrow = 1)
       FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,]
       var.Fehat_i <- t(FEhat_i) %*% FEhat_i / T_ii
 
@@ -124,8 +124,8 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       out$SigmaC <- c(out$SigmaC, V0/N_tt + W0/T_ii)
       temp.F <- diag(solve(Dhat) %*% var.Lehat_t %*% solve(Dhat))
       temp.L <- diag(var.Fehat_i)
-      out$SigmaF <- c(out$SigmaF, temp.F[1,1])
-      out$SigmaL <- c(out$SigmaL, temp.L[1,1])
+      out$SigmaF <- c(out$SigmaF, temp.F[1])
+      out$SigmaL <- c(out$SigmaL, temp.L[1])
     }
 
     } else {
@@ -138,12 +138,12 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       obsi.tt <- which(missingX[tt,]==0)
       obst.ii <- which(missingX[,ii]==0)
 
-      Lhat_ii <- Lhat[ii,]
+      Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
       LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,]
       var.Lehat_t <- t(LEhat_t) %*% LEhat_t / No
       var.Lhat <- t(Lhat) %*% Lhat / N
 
-      Fhat_tt <- Fhat[tt,]
+      Fhat_tt <- matrix(Fhat[tt,], nrow = 1)
       FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,]
       var.Fehat_i <- t(FEhat_i) %*% FEhat_i / T_ii
 
@@ -162,8 +162,8 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       out$SigmaC <- c(out$SigmaC, V0/No + W0/T_ii)
       temp.F <- diag(solve(Dhat) %*% var.Lehat_t %*% solve(Dhat))
       temp.L <- diag(var.Fehat_i)
-      out$SigmaF <- c(out$SigmaF, temp.F[1,1])
-      out$SigmaL <- c(out$SigmaL, temp.L[1,1])
+      out$SigmaF <- c(out$SigmaF, temp.F[1])
+      out$SigmaL <- c(out$SigmaL, temp.L[1])
       }
     }
   return(out)

@@ -70,8 +70,8 @@ se0 <- function(object, npoints, tpoints, qq){
     ii <- npoints[ipoints]
     tt <- tpoints[ipoints]
 
-    Lhat_ii <- Lhat[ii,]
-    Fhat_tt <- Fhat[tt,]
+    Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
+    Fhat_tt <- matrix(Fhat[tt,], nrow = 1)
 
     LEhat_t <- pracma::repmat(matrix(ehat[tt,], byrow = FALSE),1,r) * Lhat
     var.Lehat_t <- t(LEhat_t) %*% LEhat_t / N
@@ -95,8 +95,8 @@ se0 <- function(object, npoints, tpoints, qq){
     out$SigmaC <- c(out$SigmaC, V0/N + W0/T)
     temp.F <- diag(solve(Dhat) %*% var.Lehat_t %*% solve(Dhat))
     temp.L <- diag(var.Fehat_i)
-    out$SigmaF <- c(out$SigmaF, temp.F[1,1])
-    out$SigmaL <- c(out$SigmaL, temp.L[1,1])
+    out$SigmaF <- c(out$SigmaF, temp.F[1])
+    out$SigmaL <- c(out$SigmaL, temp.L[1])
   }
 
   return(out)
