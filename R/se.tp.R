@@ -94,10 +94,9 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
 
       # this assumes that the data are ordered. Otherwise
       # we need to use for i in JT (see check_goodNJ)
-      if (i<No) {
+      if (ii<No) {
         B_Lam <- (diag(r) + A_Lam) %*% (N_tt/N)
-      }
-      if (i>No & i<N_tt) {
+      } else {
         B_Lam <- diag(r) %*% (N_tt/N)
       }
 
