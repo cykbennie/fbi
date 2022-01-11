@@ -11,7 +11,6 @@
 #' @param name.only logical. If \code{TRUE}, return a dataframe with variable
 #' names and types of transformation only;
 #' if \code{FALSE}, return a dataframe with more details.
-#' @param verbose logical, indicating whether or not descriptions should be printed.
 #'
 #' @return a vector of variable names, or a data frame with detailed descriptions.
 #'
@@ -23,11 +22,11 @@
 #'
 #' @examples
 #' library(fbi)
-#' varnames <- describe_qd(c("GDPC1", "Y033RC1Q027SBEAx"), name.only = TRUE, verbose = FALSE)
+#' varnames <- describe_qd(c("GDPC1", "Y033RC1Q027SBEAx"), name.only = TRUE)
 
 
 
-describe_qd <- function(varname, name.only = TRUE, verbose = FALSE) {
+describe_qd <- function(varname, name.only = TRUE) {
   fredqd_description <- fredqd_description
 
   index <- c()
@@ -39,13 +38,10 @@ describe_qd <- function(varname, name.only = TRUE, verbose = FALSE) {
   data <- fredqd_description[index,]
 
   if (name.only) {
-    outdata <- data[, c("fred", "description", "ttype")]
+    outdata <- data[, c("fred", "description", "tcode", "ttype")]
   } else {
     outdata <- data
   }
-
-  if (verbose)
-    print(t(data))
 
   return(outdata)
 

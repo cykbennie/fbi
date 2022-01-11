@@ -88,8 +88,8 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       notobsi.tt <- which(missingX[tt,]==1)
       notobst.ii <- which(missingX[,ii]==1)
 
-      var_Lhato <- t(Lhat[obsi.tt,]) %*% Lhat[obsi.tt,] / No
-      var_Lhatm <- t(Lhat[notobsi.tt,]) %*% Lhat[notobsi.tt,] / No
+      var_Lhato <- t(Lhat[obsi.tt,, drop = FALSE]) %*% Lhat[obsi.tt,, drop = FALSE] / No
+      var_Lhatm <- t(Lhat[notobsi.tt,, drop = FALSE]) %*% Lhat[notobsi.tt,, drop = FALSE] / No
       A_Lam <- var_Lhatm %*% solve(var_Lhato)
 
       # this assumes that the data are ordered. Otherwise
@@ -102,16 +102,16 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       }
 
       Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
-      LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,]
+      LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,, drop = FALSE]
       var.Lehat_t <- B_Lam %*% t(LEhat_t) %*% LEhat_t %*% t(B_Lam) / N_tt
       var.Lhat <- t(Lhat) %*% Lhat / N
 
       Fhat_tt <- matrix(Fhat[tt,], nrow = 1)
-      FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,]
+      FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,, drop = FALSE]
       var.Fehat_i <- t(FEhat_i) %*% FEhat_i / T_ii
 
       for (k in 1:qq) {
-        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),]) %*% FEhat_i[1:(nrow(FEhat_i)-k),] / T_ii
+        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),, drop = FALSE]) %*% FEhat_i[1:(nrow(FEhat_i)-k),, drop = FALSE] / T_ii
       }
 
       V0 <- (N_tt/N)^2 * Lhat_ii %*% solve(var.Lhat) %*% var.Lehat_t %*% solve(var.Lhat) %*% t(Lhat_ii)
@@ -139,16 +139,16 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       obst.ii <- which(missingX[,ii]==0)
 
       Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
-      LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,]
+      LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,, drop = FALSE]
       var.Lehat_t <- t(LEhat_t) %*% LEhat_t / No
       var.Lhat <- t(Lhat) %*% Lhat / N
 
       Fhat_tt <- matrix(Fhat[tt,], nrow = 1)
-      FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,]
+      FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,, drop = FALSE]
       var.Fehat_i <- t(FEhat_i) %*% FEhat_i / T_ii
 
       for (k in 1:qq) {
-        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),]) %*% FEhat_i[1:(nrow(FEhat_i)-k),] / T_ii
+        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),, drop = FALSE]) %*% FEhat_i[1:(nrow(FEhat_i)-k),, drop = FALSE] / T_ii
       }
 
       # variance of common component

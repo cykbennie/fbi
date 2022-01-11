@@ -118,16 +118,16 @@ se.tw <- function(object, npoints, tpoints, qq, re_estimate){
       var.Fehat_i <- t(FEhat_i) %*% FEhat_i / T
 
       for (k in 1:qq) {
-        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),]) %*% FEhat_i[1:(nrow(FEhat_i)-k),] / T
+        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),, drop = FALSE]) %*% FEhat_i[1:(nrow(FEhat_i)-k),, drop = FALSE] / T
       }
 
       B.Lam <- diag(r)
       B.F <- diag(r)
 
-      var_Lhato <- t(Lhat[1:No,]) %*% Lhat[1:No,] / No
-      var_Lhatm <- t(Lhat[(No+1):N,]) %*% Lhat[(No+1):N,] / (N-No)
-      var_Fhato <- t(Fhat[1:To,]) %*% Fhat[1:To,] / To
-      var_Fhatm <- t(Fhat[(To+1):T,]) %*% Fhat[(To+1):T,] / (T-To)
+      var_Lhato <- t(Lhat[1:No,, drop = FALSE]) %*% Lhat[1:No,, drop = FALSE] / No
+      var_Lhatm <- t(Lhat[(No+1):N,, drop = FALSE]) %*% Lhat[(No+1):N,, drop = FALSE] / (N-No)
+      var_Fhato <- t(Fhat[1:To,, drop = FALSE]) %*% Fhat[1:To,, drop = FALSE] / To
+      var_Fhatm <- t(Fhat[(To+1):T,, drop = FALSE]) %*% Fhat[(To+1):T,, drop = FALSE] / (T-To)
 
       if (ii<No) {
         B.Lam <- (No/N) * diag(r) + (1-No/N) * var_Lhatm %*% solve(var_Lhato)
@@ -189,15 +189,15 @@ se.tw <- function(object, npoints, tpoints, qq, re_estimate){
 
       Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
       Fhat_tt <- matrix(Fhat[tt,], nrow = 1)
-      LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,]
+      LEhat_t <- pracma::repmat(matrix(ehat[tt,obsi.tt], byrow = FALSE),1,r) * Lhat[obsi.tt,, drop = FALSE]
       var.Lehat_t <- t(LEhat_t) %*% LEhat_t / NN
       var.Lhat <- t(Lhat) %*% Lhat / N
 
-      FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,]
+      FEhat_i <- pracma::repmat(matrix(ehat[obst.ii,ii], byrow = FALSE),1,r) * Fhat[obst.ii,, drop = FALSE]
       var.Fehat_i <- t(FEhat_i) %*% FEhat_i / TT
 
       for (k in 1:qq) {
-        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),]) %*% FEhat_i[1:(nrow(FEhat_i)-k),] / TT
+        var.Fehat_i <- var.Fehat_i + t(FEhat_i[(k+1):nrow(FEhat_i),, drop = FALSE]) %*% FEhat_i[1:(nrow(FEhat_i)-k),, drop = FALSE] / TT
       }
 
       # variance of common component

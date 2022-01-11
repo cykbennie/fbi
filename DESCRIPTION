@@ -10,7 +10,7 @@ Author: Yankang (Bennie) Chen [aut, cre],
     Serena Ng [aut],
     Jushan Bai [aut]
 Maintainer: Yankang (Bennie) Chen <yankang.chen@yale.edu>
-Description: Factor-Based imputation of missing values in panel data and and
+Description: Factor-Based imputation of missing values in panel data and 
     manipulation of the FRED-MD/QD Data Set. It estimates the factor model in the
     panel data based on the methods in Bai and Ng (2002)
     <doi:10.1111/1468-0262.00273> and Bai and Ng (2019)

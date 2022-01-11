@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yankang Bennie Chen" />
 
-<meta name="date" content="2022-01-07" />
+<meta name="date" content="2022-01-11" />
 
 <title>Factor model using the FRED-MD data set</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Factor model using the FRED-MD data set</h1>
 <h4 class="author">Yankang Bennie Chen</h4>
-<h4 class="date">2022-01-07</h4>
+<h4 class="date">2022-01-11</h4>
 
 
 
@@ -150,7 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fbi)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>filepath <span class="ot">&lt;-</span> <span class="st">&quot;https://files.stlouisfed.org/files/htdocs/fred-md/monthly/2021-08.csv&quot;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fredmd</span>(filepath ,<span class="at">date_start =</span> <span class="cn">NULL</span>, <span class="at">date_end =</span> <span class="cn">NULL</span>, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fredmd</span>(filepath, <span class="at">date_start =</span> <span class="cn">NULL</span>, <span class="at">date_end =</span> <span class="cn">NULL</span>, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">ncol</span>(data)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View the head lines of data</span></span>

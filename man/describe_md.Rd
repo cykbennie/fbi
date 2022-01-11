@@ -4,7 +4,7 @@
 \alias{describe_md}
 \title{Describe selected variables in the FRED-MD Data Set}
 \usage{
-describe_md(varname, name.only = TRUE, verbose = FALSE)
+describe_md(varname, name.only = TRUE)
 }
 \arguments{
 \item{varname}{string or a vector strings of the FRED variable name,
@@ -13,8 +13,6 @@ such as \code{GDPC1}.}
 \item{name.only}{logical. If \code{TRUE}, return a dataframe with variable
 names and types of transformation only;
 if \code{FALSE}, return a dataframe with more details.}
-
-\item{verbose}{logical, indicating whether or not descriptions should be printed.}
 }
 \value{
 a vector of variable names, or a data frame with detailed descriptions.
@@ -25,7 +23,7 @@ in the FRED-MD data set.
 }
 \examples{
 library(fbi)
-varnames <- describe_md(c("RPI", "RETAILx"), name.only = TRUE, verbose = FALSE)
+varnames <- describe_md(c("RPI", "RETAILx"), name.only = TRUE)
 }
 \references{
 Michael W. McCracken and Serena Ng (2015), \emph{FRED-MD Updated Appendix}.
