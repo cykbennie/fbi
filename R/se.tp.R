@@ -95,9 +95,9 @@ se.tp <- function(object, npoints, tpoints, qq, re_estimate = TRUE){
       # this assumes that the data are ordered. Otherwise
       # we need to use for i in JT (see check_goodNJ)
       if (ii<No) {
-        B_Lam <- (diag(r) + A_Lam) %*% (N_tt/N)
+        B_Lam <- (diag(r) + A_Lam) * (N_tt/N)
       } else {
-        B_Lam <- diag(r) %*% (N_tt/N)
+        B_Lam <- diag(r) * (N_tt/N)
       }
 
       Lhat_ii <- matrix(Lhat[ii,], nrow = 1)
