@@ -55,7 +55,8 @@ fredqd <- function(file = "", date_start = NULL, date_end = NULL, transform = TR
   # Prepare raw data
   rawdata <- readr::read_csv(file, col_names = FALSE, col_types = cols(X1 = col_date(format = "%m/%d/%Y")),
                              skip = 3)
-  rawdata <- rawdata[1:(nrow(rawdata) - 2), ] # remove NA rows
+  ind_notna <- min(which(is.na(rawdata[,1]))) - 1
+  rawdata <- rawdata[1:ind_notna, ] # remove NA rows
   rawdata <- as.data.frame(rawdata)
 
   attrdata <- read.csv(file, header = FALSE, nrows = 3)
