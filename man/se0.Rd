@@ -2,12 +2,12 @@
 % Please edit documentation in R/se0.R
 \name{se0}
 \alias{se0}
-\title{Standard Error of Selected Points (Baseline)}
+\title{Standard Error of Selected Points (APC)}
 \usage{
 se0(object, npoints, tpoints, qq)
 }
 \arguments{
-\item{object}{an object of class `tw` or `tp`.}
+\item{object}{an object produced by the \code{\link{apc}} function.}
 
 \item{npoints}{integer or vector of integers, indicating i of the
 (i,t) pair(s) of interest.}
@@ -30,7 +30,7 @@ a list of elements:
 }
 \description{
 \code{se0} produces the estimated standard error of C^hat
-produced by the \code{\link{tw_apc}} or \code{\link{tp_apc}} function.
+produced by the \code{\link{apc}} function.
 }
 \references{
 Jushan Bai and Serena Ng (2002), \emph{Determining the number of factors in approximate factor models}.

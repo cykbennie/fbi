@@ -1,13 +1,13 @@
-#' @title Standard Error of Selected Points (Baseline)
+#' @title Standard Error of Selected Points (APC)
 #'
 #' @description
 #' \code{se0} produces the estimated standard error of C^hat
-#' produced by the \code{\link{tw_apc}} or \code{\link{tp_apc}} function.
+#' produced by the \code{\link{apc}} function.
 #'
 #' @import pracma
 #' @export
 #'
-#' @param object an object of class `tw` or `tp`.
+#' @param object an object produced by the \code{\link{apc}} function.
 #' @param tpoints integer or vector of integers, indicating t of the
 #' (i,t) pair(s) of interest.
 #' @param npoints integer or vector of integers, indicating i of the
