@@ -51,10 +51,10 @@ apc <- function(X, kmax){
   V <- svd_model$v
   D <- diag(d)
   D <- D / (sqrt(N*T))
-  Dr <- D[1:kmax, 1:kmax]
+  Dr <- D[1:kmax, 1:kmax, drop = FALSE]
 
-  out$Fhat <- sqrt(T) * U[, 1:kmax]
-  out$Lamhat <- sqrt(N) * V[, 1:kmax] %*% Dr
+  out$Fhat <- sqrt(T) * U[, 1:kmax, drop = FALSE]
+  out$Lamhat <- sqrt(N) * V[, 1:kmax, drop = FALSE] %*% Dr
   out$Chat <- out$Fhat %*% t(out$Lamhat)
   out$d <- d[1:kmax]
   out$d0 <- d
