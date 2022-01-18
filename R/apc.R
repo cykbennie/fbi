@@ -56,8 +56,8 @@ apc <- function(X, kmax){
   out$Fhat <- sqrt(T) * U[, 1:kmax, drop = FALSE]
   out$Lamhat <- sqrt(N) * V[, 1:kmax, drop = FALSE] %*% Dr
   out$Chat <- out$Fhat %*% t(out$Lamhat)
-  out$d <- d[1:kmax]
   out$d0 <- d
+  out$d <- d[1:kmax]
   out$Dhat <- diag(out$d)
   out$ehat <- out$X - out$Chat
 
