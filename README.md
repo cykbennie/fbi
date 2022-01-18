@@ -43,7 +43,7 @@ Refer to the [fbi.pdf](fbi.pdf) file for details.
 
 ## Vignette
 
-See [factor_fred.html](https://github.com/cykbennie/fbi/blob/master/doc/factor_fred.html) for an example using the FRED-MD dataset (https://research.stlouisfed.org/econ/mccracken/fred-databases/).
+Download [factor_fred.html](https://github.com/cykbennie/fbi/blob/master/doc/factor_fred.html) for an example using the FRED-MD dataset (https://research.stlouisfed.org/econ/mccracken/fred-databases/).
 
 ## Author
 
