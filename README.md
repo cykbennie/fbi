@@ -45,6 +45,11 @@ Refer to the [fbi.pdf](fbi.pdf) file for details.
 
 After installing the package, use the code:
 ``` r
+browseVignettes("fbi")
+```
+or
+
+``` r
 vignette("factor_fred", package = "fbi")
 ```
 to see an example using the FRED-MD dataset (https://research.stlouisfed.org/econ/mccracken/fred-databases/).
