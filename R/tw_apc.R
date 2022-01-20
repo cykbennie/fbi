@@ -106,11 +106,14 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
       Xhat_scaled <- (Xhat - mu_hat) / sd_hat
 
       reest <- fbi::apc(Xhat_scaled, kmax)
-      out$data <- Xhat
       out$Fhat <- reest$Fhat
       out$Lamhat <- reest$Lamhat
       out$Dhat <- reest$Dhat
-      out$Chat <- reest$Chat
+      out$Chat <- reest$Chat * sd_hat + mu_hat
+      data <- X
+      data[missing] <- out$Chat[missing]
+      out$data <- data
+
     } else {
       out$data <- Xhat
       out$Fhat <- Fhat
@@ -142,11 +145,14 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
       Xhat_scaled <- Xhat - mu_hat
 
       reest <- fbi::apc(Xhat_scaled, kmax)
-      out$data <- Xhat
       out$Fhat <- reest$Fhat
       out$Lamhat <- reest$Lamhat
       out$Dhat <- reest$Dhat
-      out$Chat <- reest$Chat
+      out$Chat <- reest$Chat + mu_hat
+      data <- X
+      data[missing] <- out$Chat[missing]
+      out$data <- data
+
     } else {
       out$data <- Xhat
       out$Fhat <- Fhat
@@ -175,11 +181,14 @@ tw_apc <- function(X, kmax, center = FALSE, standardize = FALSE,
 
     if (re_estimate){
       reest <- fbi::apc(Xhat, kmax)
-      out$data <- Xhat
       out$Fhat <- reest$Fhat
       out$Lamhat <- reest$Lamhat
-      out$Dhat <- diag(reest$d)
-      out$Chat <- out$Fhat %*% t(out$Lamhat)
+      out$Dhat <- reest$Dhat
+      out$Chat <- reest$Chat
+      data <- X
+      data[missing] <- out$Chat[missing]
+      out$data <- data
+
     } else {
       out$data <- Xhat
       out$Fhat <- Fhat

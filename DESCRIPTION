@@ -2,7 +2,7 @@ Package: fbi
 Type: Package
 Title: Factor-Based Imputation and FRED-MD/QD Data Set
 Version: 0.6.0
-Date: 2022-01-18
+Date: 2022-01-19
 Authors@R: c(person("Yankang (Bennie)", "Chen", email = "yankang.chen@yale.edu", role = c("aut", "cre")),
     person("Serena", "Ng", email = "serena.ng@columbia.edu", role = "aut"),
     person("Jushan", "Bai", email = "jushan.bai@columbia.edu", role = "aut"))
