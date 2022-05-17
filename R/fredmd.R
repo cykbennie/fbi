@@ -48,9 +48,18 @@ fredmd <- function(file = "", date_start = NULL, date_end = NULL, transform = TR
   # Prepare raw data
   rawdata <- readr::read_csv(file, col_names = FALSE, col_types = cols(X1 = col_date(format = "%m/%d/%Y")),
                              skip = 2)
-  rawdata <- rawdata[1:(nrow(rawdata) - 1), ] # remove NA rows
+  
   rawdata <- as.data.frame(rawdata)
-
+  row_to_remove = c()
+  for (row in (nrow(rawdata)-20):nrow(rawdata)){
+    if(!any(is.finite(unlist(rawdata[row, ])))){
+      row_to_remove = c(row_to_remove,row)# remove NA rows
+    } 
+  }
+  if(length(row_to_remove)>0){
+    rawdata = rawdata[-row_to_remove,]
+  }
+  
   attrdata <- read.csv(file, header = FALSE, nrows = 2)
   header <- c("date", unlist(attrdata[1,2:ncol(attrdata)]))
   colnames(rawdata) <- header
