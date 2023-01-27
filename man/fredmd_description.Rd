@@ -16,7 +16,6 @@ A data frame with 135 rows and 9 variables. The variables are as follows:
   \item{gsi:description}{description of the series in GSI}
   \item{group}{group of the series}
   \item{edited}{logical, indicating if the data has been editted}
-  \item{varname}{"X" + id}
 }
 }
 \source{

@@ -16,7 +16,6 @@ A data frame with 248 rows and 10 variables. The variables are as follows:
   \item{sw_mnemonic}{mnemonic used in SW (2012)}
   \item{description}{a brief definition of the series}
   \item{group}{group of the series}
-  \item{varname}{"X" + id}
 }
 }
 \source{
