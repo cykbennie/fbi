@@ -47,7 +47,7 @@ Download [factor_fred.html](https://github.com/cykbennie/fbi/blob/master/doc/fac
 
 ## Author
 
-* Yankang (Bennie) Chen (<yankang.chen@yale.edu>)
+* Yankang (Bennie) Chen (<cykbennie@outlook.com>)
 
 ## License
 
